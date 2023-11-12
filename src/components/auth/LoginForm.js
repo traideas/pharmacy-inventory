@@ -1,26 +1,34 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const LoginForm = () => {
+const LoginForm = ({
+  toggleSignUp,
+}) => {
   let navigate = useNavigate();
   const [data, setData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
-  console.log(data);
-  const handleFunction = (e) => {
+  //console.log(data);
+  const handleSubmit = (e) => {
     e.preventDefault();
+    if (data.email === 'pharma.com' && data.password === '123456') {
+      navigate('/home');
+    } else {
+      //tosterMessage("Wrong credential", "error");
+    }
   };
 
   return (
-    <div className=" lg:px-2 lg:py-2 sm:px-2 sm:py-2 ">
-      <form action="" className="mx-auto mb-0 mt-8 max-w-md space-y-4">
+    <div>
+      <h1 className="text-xl font-bold sm:text-3xl text-center ">
+        Login to your account
+      </h1>
+      <form className="mx-auto mb-0 mt-8 max-w-md space-y-4">
         <div>
           <div className="relative">
             <input
-              type="email"
               className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
               placeholder="Enter email"
               onChange={(e) =>
@@ -48,6 +56,12 @@ const LoginForm = () => {
         </div>
 
         <div>
+          {/* <div className="text-left text-sm font-semibold">
+            <label htmlFor="password" className="text-left">
+              Password
+            </label>
+          </div> */}
+
           <div className="relative">
             <input
               type="password"
@@ -83,24 +97,23 @@ const LoginForm = () => {
           </div>
         </div>
 
-        <div className="mx-auto" >
+        <div className="mx-auto">
           <button
-            onClick={handleFunction}
+            onClick={handleSubmit}
             className="inline-block w-full rounded-lg bg-black py-2 text-sm font-mono text-white"
           >
             Sign in
           </button>
-          <div className="mt-2">
-          Don't have an account?  <Link
-            to="/signup"
-            className="text-blue-500"
-          >
-             Sign Up
-          </Link>
-          </div>
-          
         </div>
       </form>
+      <div className="mt-3">
+        <p>
+          Dont have account?{' '}
+          <span className="text-blue-500 cursor-pointer" onClick={toggleSignUp}>
+            Sign Up
+          </span>
+        </p>
+      </div>
     </div>
   );
 };

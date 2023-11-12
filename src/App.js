@@ -1,23 +1,24 @@
-import { Routes, Route } from "react-router-dom";
-import './App.css';
-import Navbar from "./components/navbar/Navbar.js";
-import Login from "../src/components/pages/publicPages/auth/Login.js";
-import SignUp from "../src/components/pages/publicPages/auth/Signup.js"
-import Pharamacist from "./layouts/pharmacist/Pharamacist.js";
-import  Table  from "./components/pages/privatePages/Table.js";
+import { Routes, Route } from 'react-router-dom';
+import Pharamacist from './layouts/pharmacist/Pharamacist.js';
+import Login from './pages/publicPages/auth/Login';
+import PublicHome from './components/publicHome/PublicHome.js';
+import PrivateHomePage from './pages/privatePages/PrivateHomePage.js';
+import Medicine from './pages/privatePages/medicine/index.js';
+import Patient from './pages/privatePages/patient/index.js';
+
 function App() {
   return (
-  <>
-    <Routes>
-      <Route path='/' element={<Login/>}/>
-      <Route path='/signup' element={<SignUp/>}/>
-
-      <Route path='/navbar' element={<Navbar/>}/>
-      <Route element={<Pharamacist />}>
-      <Route path='/table' element={<Table/>}/>
-      </Route>
-    </Routes>
-  </>
+    <>
+      <Routes>
+        <Route path="/" element={<PublicHome />} />
+        <Route path="/auth" element={<Login />} />
+        <Route element={<Pharamacist />}>
+          <Route path="/home" element={<PrivateHomePage />} />
+          <Route path="/medicine-list" element={<Medicine />} />
+          <Route path="/patient-list" element={<Patient />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

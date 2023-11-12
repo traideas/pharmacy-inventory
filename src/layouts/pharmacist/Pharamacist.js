@@ -1,6 +1,6 @@
 import React from 'react'
-import { Navigate, useLocation, Outlet, useNavigate } from "react-router-dom";
-import Navbar from '../../components/navbar/Navbar';
+import { Navigate, useLocation, Outlet } from "react-router-dom";
+import Navbar from '../../shared/navbar/PrivateNavbar';
 
 const Pharamacist = () => {
 let userType="parmacist"
