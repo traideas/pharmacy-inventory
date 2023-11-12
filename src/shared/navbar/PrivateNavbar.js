@@ -1,7 +1,6 @@
 import { useState,useRef,useEffect } from "react";
-import LanguageToggle from "./LanguageToggle";
+import navLogo from '../../assests/logo/logo.png'
 import { Link } from "react-router-dom";
-import navLogo from "../assets/img/logo.jpeg";
 
 const Navbar = () => {
 
@@ -44,9 +43,9 @@ const Navbar = () => {
 
   return (
     <nav className="bg-[#E0F4FF] border-gray-200 relative">
-      <div className="max-w-screen-3xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link to="/" className="flex items-center">
-          {/* <img src={navLogo} className="h-10" alt="Flowbite Logo" /> */}
+      <div className="px-10 flex flex-wrap items-center justify-between">
+        <Link to="/home" className="flex items-center">
+          <img src={navLogo} className="h-16 w-16" alt="Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap">
           Pharma Inventory
           </span>
@@ -98,16 +97,9 @@ const Navbar = () => {
                 </div>
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
-                <li className="p-4 ">
-                  {/* <LanguageToggle isChecked={isChecked}  handleToggle={handleToggle}/> */}
-                  <LanguageToggle
-                  
-                    handleToggle={handleToggle}
-                  />
-                </li>
 
                 <Link to="/">
-                  <li className="flex flex-row items-center ml-4 hover:bg-gray-100">
+                  <li className="flex flex-row items-center ml-4 ">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -124,7 +116,7 @@ const Navbar = () => {
                     </svg>
 
                     <p className="block px-2 py-2 text-md text-gray-700  ">
-                    
+                     Sign Out
                     </p>
                   </li>
                 </Link>
