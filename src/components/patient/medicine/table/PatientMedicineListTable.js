@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import usePagination from '../../../../customHooks/usePagination';
 import BackButton from '../../../../shared/button/backButton';
 import Table from '../../../../shared/table/Table';
 import RowView from './RowView';
 import Pagination from '../../../../shared/pagination/Pagination';
-import AddMedicineModal from '../../../../shared/modal/AddMedicineModal';
+import AddPatientPrescriptionModal from '../../../../shared/modal/AddPatientPrescriptionModal';
 
 const dataList = [
   {
     issueDate: 'Nov 10, 2023',
-    patientName:'Asraf rahman',
+    time: 'Night',
+    doseges: 1,
+    patientName: 'Asraf rahman',
     medicineName: 'Calcicare',
     cduration: 10,
     status: true,
   },
 ];
 
-const PatientMedicineListTable = ({isOpen, handleOpen, handleClose}) => {
+const PatientMedicineListTable = ({ isOpen, handleOpen, handleClose }) => {
   const PER_PAGE = 25;
   const count = Math.ceil(dataList.length / PER_PAGE);
   const _DATA = usePagination(dataList, PER_PAGE);
@@ -25,39 +27,28 @@ const PatientMedicineListTable = ({isOpen, handleOpen, handleClose}) => {
     <div className="container-2xl">
       <div className="flex justify-between items-center">
         <BackButton />
-        <button data-modal-target="crud-modal" data-modal-toggle="crud-modal"  onClick={handleOpen} className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+        <button
+          data-modal-target="crud-modal"
+          data-modal-toggle="crud-modal"
+          onClick={handleOpen}
+          className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+        >
           Add Prescribed Medicine
         </button>
       </div>
       <div className="pb-4 bg-white ">
-        <label for="table-search" className="sr-only">
-          Search
-        </label>
-        <div className="relative mt-6">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg
-              className="w-4 h-4 text-gray-500 "
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-              />
-            </svg>
+        {dataList.length === 0 ? (
+          <p>No prescribed medicine alert</p>
+        ) : (
+          <div className="block max-w-sm mt-5 mb-1 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              {dataList.length} Prescribed Alert
+            </h5>
+            <p className="font-normal text-gray-700">
+              You have <span className='text-blue-500 font-semibold'>{dataList[0].medicineName}</span> medicine at <span className='text-red-600 font-semibold'>{dataList[0].time}</span>
+            </p>
           </div>
-          <input
-            type="text"
-            disabled={dataList.length == 0 ? true : false}
-            className="block p-2 w-full pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg  bg-gray-50"
-            placeholder="Search by patient/medicine name"
-          />
-        </div>
+        )}
       </div>
       <div className="flex flex-col border border-gray-200 mt-2">
         <Table>
@@ -73,10 +64,16 @@ const PatientMedicineListTable = ({isOpen, handleOpen, handleClose}) => {
                 Medicine Name
               </th>
               <th scope="col" className="px-6 py-3">
-                Date & Time
+                Date
               </th>
               <th scope="col" className="px-6 py-3">
-                Course Duration
+                Time
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Dosege
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Duration
               </th>
             </tr>
           </thead>
@@ -107,9 +104,7 @@ const PatientMedicineListTable = ({isOpen, handleOpen, handleClose}) => {
           </div>
         )}
       </div>
-      {isOpen && (
-        <AddMedicineModal handleClose={handleClose}/>
-      )}
+      {isOpen && <AddPatientPrescriptionModal handleClose={handleClose} />}
     </div>
   );
 };

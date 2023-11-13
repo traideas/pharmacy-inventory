@@ -21,8 +21,8 @@ const RowView = ({ item, index, _DATA, perPage }) => {
     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
       {item.issueDate}
     </td>
-    <td className="px-6 py-4 whitespace-nowrap text-sm text-red-500 ">
-      {item.exDate}<span className='text-gray-700'> (Expired in 7d's) </span>
+    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
+      {item.exDate}<span className='text-red-600 font-semibold'> (Expired in 7d's) </span>
     </td>
     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
       {item.status === true ? <InStockChip /> : <OutOfStockChip />}
