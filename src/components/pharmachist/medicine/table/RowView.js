@@ -1,6 +1,6 @@
 import React from 'react'
-import InStockChip from '../../../shared/chip/InStockChip'
-import OutOfStockChip from '../../../shared/chip/OutOfStockChip'
+import InStockChip from '../../../../shared/chip/InStockChip';
+import OutOfStockChip from '../../../../shared/chip/OutOfStockChip';
 
 const RowView = ({ item, index, _DATA, perPage }) => {
     
@@ -21,11 +21,11 @@ const RowView = ({ item, index, _DATA, perPage }) => {
     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
       {item.issueDate}
     </td>
-    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
-      {item.exDate}
+    <td className="px-6 py-4 whitespace-nowrap text-sm text-red-500 ">
+      {item.exDate}<span className='text-gray-700'> (Expired in 7d's) </span>
     </td>
     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
-      {item.status == true ? <InStockChip /> : <OutOfStockChip />}
+      {item.status === true ? <InStockChip /> : <OutOfStockChip />}
     </td>
     <td className="px-6 py-4 text-center flex justify-center  whitespace-nowrap text-sm font-medium">
       <svg

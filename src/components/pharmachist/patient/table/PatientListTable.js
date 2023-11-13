@@ -1,9 +1,10 @@
 import React from 'react'
-import Table from '../../../shared/table/Table'
-import usePagination from '../../../customHooks/usePagination';
-import Pagination from '../../../shared/pagination/Pagination';
+import usePagination from '../../../../customHooks/usePagination';
+import BackButton from '../../../../shared/button/backButton';
+import Table from '../../../../shared/table/Table';
 import RowView from './RowView';
-import BackButton from '../../../shared/button/backButton';
+import Pagination from '../../../../shared/pagination/Pagination';
+
 const dataList = [
     {
         id:1,

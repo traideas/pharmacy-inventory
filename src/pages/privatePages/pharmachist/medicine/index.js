@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MedicineListTable from '../../../components/medicine/table/MedicineListTable';
+import MedicineListTable from '../../../../components/pharmachist/medicine/table/MedicineListTable';
 
 const Medicine = () => {
   const [isOpen, setIsOpen] = useState(false);
