@@ -2,12 +2,12 @@ import React from 'react'
 import { Navigate, useLocation, Outlet } from "react-router-dom";
 import Navbar from '../../shared/navbar/PrivateNavbar';
 
-const Pharamacist = () => {
-let userType="parmacist"
+const PatientLayout = () => {
+let userType="patient"
 let location = useLocation();
 
 
-if (userType === "parmacist") {
+if (userType === "patient") {
     return (
       <>
         <Navbar />
@@ -18,4 +18,4 @@ if (userType === "parmacist") {
   return <Navigate to="/" state={{ from: location }} />;
 }
 
-export default Pharamacist
+export default PatientLayout

@@ -4,19 +4,19 @@ import { Link } from 'react-router-dom';
 const cardData = [
   {
     id: 1,
-    routeName: 'medicine-list',
+    routeName: 'pharma/medicine-list',
     color: '#C9DAF8',
     title: 'Medicine List',
   },
   {
     id: 2,
-    routeName: 'patient-list',
+    routeName: 'pharma/patient-list',
     color: '#f4cccc',
     title: 'Patient List',
   },
 ];
 
-const PrivateHomePage = () => {
+const PharmachistHomePage = () => {
   return (
     <div className="container-2xl">
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-x-5 gap-y-3 mb-5  mt-5">
@@ -41,4 +41,4 @@ const PrivateHomePage = () => {
   );
 };
 
-export default PrivateHomePage;
+export default PharmachistHomePage;

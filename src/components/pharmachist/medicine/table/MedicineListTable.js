@@ -1,10 +1,10 @@
 import React from 'react';
-import usePagination from '../../../customHooks/usePagination';
-import Pagination from '../../../shared/pagination/Pagination';
+import usePagination from '../../../../customHooks/usePagination';
+import BackButton from '../../../../shared/button/backButton';
+import Table from '../../../../shared/table/Table';
 import RowView from './RowView';
-import Table from '../../../shared/table/Table';
-import AddMedicineModal from '../../../shared/modal/AddMedicineModal';
-import BackButton from '../../../shared/button/backButton';
+import Pagination from '../../../../shared/pagination/Pagination';
+import AddMedicineModal from '../../../../shared/modal/AddMedicineModal';
 
 const dataList = [
   {

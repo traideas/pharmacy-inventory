@@ -1,5 +1,5 @@
 import React from 'react'
-import PatientListTable from '../../../components/patient/table/PatientListTable'
+import PatientListTable from '../../../../components/pharmachist/patient/table/PatientListTable'
 
 const Patient = () => {
   return (

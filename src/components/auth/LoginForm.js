@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toasterMessage from '../../shared/toaster/Toaster';
 
 const LoginForm = ({
   toggleSignUp,
@@ -14,9 +15,13 @@ const LoginForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (data.email === 'pharma.com' && data.password === '123456') {
-      navigate('/home');
-    } else {
-      //tosterMessage("Wrong credential", "error");
+      navigate('/pharma/home');
+    }
+    else if(data.email === 'patient.com' && data.password === '123456'){
+      navigate('/patient/home')
+    }
+     else {
+      toasterMessage("Wrong credential", "warning");
     }
   };
 
