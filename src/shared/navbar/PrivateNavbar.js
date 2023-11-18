@@ -44,7 +44,7 @@ const Navbar = () => {
   return (
     <nav className="bg-[#E0F4FF] border-gray-200 relative">
       <div className="px-10 flex flex-wrap items-center justify-between">
-        <Link to="/" className="flex items-center">
+        <Link to="/pharma/home" className="flex items-center">
           <img src={navLogo} className="h-16 w-16" alt="Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap">
           Pharma Inventory
