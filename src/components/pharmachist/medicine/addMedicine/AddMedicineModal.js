@@ -3,8 +3,10 @@ import Modal from '../../../../shared/modal/Modal';
 
 const AddMedicineModal = ({
   handleClose,
-  data,
-  handleChange,
+  medicineData,
+  stockData,
+  handleChangeMedicine,
+  handleChangeStock,
   handleSubmit,
 }) => {
   return (
@@ -14,7 +16,7 @@ const AddMedicineModal = ({
         <button
           onClick={handleClose}
           className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center  "
-          data-modal-toggle="defaultModal"
+          medicineData-modal-toggle="defaultModal"
         >
           <svg
             aria-hidden="true"
@@ -36,31 +38,27 @@ const AddMedicineModal = ({
         <form className="p-4 md:p-5" onSubmit={handleSubmit}>
           <div className="grid gap-4 mb-4 grid-cols-2">
             <div className="col-span-2">
-              <label
-                for="name"
-                className="block mb-2 text-sm font-medium text-gray-900 "
-              >
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
                 Medicine Name
               </label>
               <input
                 type="text"
-                name="medicineName"
-                value={data.medicineName}
-                onChange={handleChange}
+                name="medicinename"
+                value={medicineData.medicinename}
+                onChange={handleChangeMedicine}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                placeholder="ex:- napa"
+                placeholder=""
                 required
               />
             </div>
             <div className="col-span-2 sm:col-span-1">
               <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                Quantity
+                Medicine Generic Name
               </label>
               <input
-                type="number"
-                name="medicineQty"
-                value={data.medicineQty}
-                onChange={handleChange}
+                name="genericname"
+                value={medicineData.genericname}
+                onChange={handleChangeMedicine}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder=""
                 required
@@ -71,9 +69,9 @@ const AddMedicineModal = ({
                 Type
               </label>
               <input
-                name="medicineType"
-                value={data.medicineType}
-                onChange={handleChange}
+                name="type"
+                value={medicineData.type}
+                onChange={handleChangeMedicine}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder=""
                 required
@@ -81,13 +79,28 @@ const AddMedicineModal = ({
             </div>
             <div className="col-span-2 sm:col-span-1">
               <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                Quantity
+              </label>
+              <input
+                type="number"
+                name="quantity"
+                value={stockData.quantity}
+                onChange={handleChangeStock}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                placeholder=""
+                required
+              />
+            </div>
+
+            <div className="col-span-2 sm:col-span-1">
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
                 Unit Price
               </label>
               <input
                 type="number"
                 name="unitPrice"
-                value={data.unitPrice}
-                onChange={handleChange}
+                value={stockData.unitPrice}
+                onChange={handleChangeStock}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder=""
                 required=""
@@ -95,22 +108,40 @@ const AddMedicineModal = ({
             </div>
             <div className="col-span-2 sm:col-span-1">
               <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                Status
+                Issue Date
               </label>
-              <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
-                <option selected="">Select status</option>
-                <option value="TV">In Stock</option>
-                <option value="PC">Out Of Stock</option>
-              </select>
+              <input
+                type="date"
+                name="issueDate"
+                value={stockData.issueDate}
+                onChange={handleChangeStock}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                placeholder=""
+                required=""
+              />
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                Expired Date
+              </label>
+              <input
+                type="date"
+                name="expireDate"
+                value={stockData.expireDate}
+                onChange={handleChangeStock}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                placeholder=""
+                required=""
+              />
             </div>
             <div className="col-span-2">
               <label className="block mb-2 text-sm font-medium text-gray-900 ">
                 Medicine Description
               </label>
               <textarea
-                value={data.medicineDescription}
-                name="medicineDescription"
-                onChange={handleChange}
+                value={medicineData.desc}
+                name="desc"
+                onChange={handleChangeMedicine}
                 rows="4"
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                 placeholder=""

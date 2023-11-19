@@ -1,22 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-const cardData = [
-  {
-    id: 1,
-    routeName: 'pharma/medicine-list',
-    color: '#C9DAF8',
-    title: 'Medicine List',
-  },
-  {
-    id: 2,
-    routeName: 'pharma/patient-list',
-    color: '#f4cccc',
-    title: 'Patient List',
-  },
-];
 
 const PharmachistHomePage = () => {
+  let location = useLocation();
+  const { pharmacyId } = location.state
+
+
+  const cardData = [
+    {
+      id: 1,
+      routeName: `pharma/medicine-list/${pharmacyId}`,
+      color: '#C9DAF8',
+      title: 'Medicine List',
+    },
+    {
+      id: 2,
+      routeName: `pharma/patient-list/${pharmacyId}`,
+      color: '#f4cccc',
+      title: 'Patient List',
+    },
+  ];
   return (
     <div className="container-2xl">
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-x-5 gap-y-3 mb-5  mt-5">

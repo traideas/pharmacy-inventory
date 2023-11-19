@@ -7,10 +7,12 @@ import Pagination from '../../../../shared/pagination/Pagination';
 import AddMedicineModal from '../addMedicine/AddMedicineModal';
 import useRequest from '../../../../apiServices/useRequest';
 
+import { useLocation, Link, useParams } from 'react-router-dom';
+
 const DataList = [
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -19,7 +21,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -28,7 +30,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -37,7 +39,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -46,7 +48,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -55,7 +57,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -64,7 +66,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -73,7 +75,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -82,7 +84,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -91,7 +93,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -100,7 +102,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -109,7 +111,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -118,7 +120,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -127,7 +129,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -136,7 +138,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -145,7 +147,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -154,7 +156,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -163,7 +165,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -172,7 +174,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -181,7 +183,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -190,7 +192,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -199,7 +201,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -208,7 +210,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -217,7 +219,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -226,7 +228,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -235,7 +237,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -244,7 +246,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -253,7 +255,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -262,7 +264,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -271,7 +273,7 @@ const DataList = [
   },
   {
     issueDate: 'Oct 3, 2023',
-    medicineType:'Vitamin',
+    medicineType: 'Vitamin',
     exDate: 'Dec 3, 2023',
     medicineName: 'Calcicare',
     medicineQty: 200,
@@ -283,75 +285,124 @@ const DataList = [
 //const dataList = [];
 
 const MedicineListTable = () => {
-  const [postRequest] = useRequest();
-  const [dataList, setDataList] = useState([])
-  const [loading, setLoading] = useState(false)
+  let { id } = useParams();
+  const [postRequest, getRequest] = useRequest();
+  const [dataList, setDataList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [singlePharmacy, setSinglePharmacy] = useState({});
 
   //crt state
-  const [data, setData] = useState({
-    medicineName: '',
-    medicineQty: '',
-    medicineType: '',
+  const [medicineData, setMedicineData] = useState({
+    medicinename: '',
+    genericname: '',
+    type: '',
+    desc: '',
+  });
+
+  const [stockData, setStockData] = useState({
+    issueDate: '',
+    expireDate: '',
     unitPrice: '',
-    medicineDescription: '',
+    quantity: '',
   });
 
   //upt state
-  const [uptData, setUptData] = useState(null)
+  const [uptData, setUptData] = useState(null);
 
   //modal for add medicine
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(!isOpen);
   const handleClose = () => setIsOpen(false);
 
-
-//crt handle change function
-  const handleChange = (e) => {
+  //crt handle change function
+  const handleChangeMedicine = (e) => {
     const value = e.target.value;
-    setData({
-      ...data,
+    setMedicineData({
+      ...medicineData,
       [e.target.name]: value,
     });
   };
 
-  //update hancle chang function 
+  const handleChangeStock = (e) => {
+    const value = e.target.value;
+    setStockData({
+      ...stockData,
+      [e.target.name]: value,
+    });
+  };
+
+  //update hancle chang function
   const handleUptChange = (e) => {
     const value = e.target.value;
     setUptData({
-      ...data,
+      ...medicineData,
       [e.target.name]: value,
     });
-  }
+  };
 
   //get data list
-  const fetchMedicineList = async() => {
+  const fetchMedicineList = async () => {
     try {
-      setLoading(true)
-      await postRequest()
+      setLoading(true);
+      await getRequest(`/api/medicine`)
         .then((res) => {
           console.log(res.data.data);
           // setDataList(res.data.data)
-          setLoading(false)
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err, 'from api call');
-          setLoading(false)
+          setLoading(false);
         });
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       console.log(error, 'from try catch');
     }
-  }
+  };
 
+  //get single pharmacy
+  const fetchSinglePharmacy = async () => {
+    await getRequest(`api/pharmacy/${id}`)
+      .then((res) => {
+        console.log(res.data.data);
+        setSinglePharmacy(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchSinglePharmacy();
+  }, []);
 
   //for crt
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let medicineFinalData = {
+      ...medicineData,
+      pharmacyId: id,
+    };
     try {
-      await postRequest()
+      await postRequest(`/api/medicine/create`, medicineFinalData)
         .then((res) => {
           console.log(res.data.data);
-          // dataList.length > 0 ? ( setDataList((prev) => [...prev, res.data.data])) : (setDataList([res.data.data]))  
+          if (res.data.error === true) {
+            console.log(res.data.message);
+          } else {
+            let stockFinalData = {
+              ...stockData,
+              medicineId: res.data.data.medicineId,
+            };
+            postRequest(`/api/stock/create`, stockFinalData)
+              .then((res) => {
+                console.log(res.data.data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+          // dataList.length > 0 ? ( setDataList((prev) => [...prev, res.data.data])) : (setDataList([res.data.data]))
         })
         .catch((err) => {
           console.log(err, 'from api call');
@@ -360,7 +411,6 @@ const MedicineListTable = () => {
       console.log(error, 'from try catch');
     }
   };
-
 
   //for update
   const handleUptSubmit = async (e) => {
@@ -369,11 +419,11 @@ const MedicineListTable = () => {
       await postRequest()
         .then((res) => {
           console.log(res.data.data);
-        //   setDataList((prev) =>
-        //   prev.map((item) =>
-        //     item._id === updateData._id ? res.data.data : item
-        //   )
-        // );
+          //   setDataList((prev) =>
+          //   prev.map((item) =>
+          //     item._id === updateData._id ? res.data.data : item
+          //   )
+          // );
         })
         .catch((err) => {
           console.log(err, 'from api call');
@@ -383,10 +433,9 @@ const MedicineListTable = () => {
     }
   };
 
-
   useEffect(() => {
-    fetchMedicineList()
-  }, [])
+    fetchMedicineList();
+  }, []);
 
   const PER_PAGE = 25;
   const count = Math.ceil(DataList.length / PER_PAGE);
@@ -413,8 +462,14 @@ const MedicineListTable = () => {
         </div>
       ) : (
         <>
+          <BackButton />
           <div className="flex justify-between items-center">
-            <BackButton />
+            <h1>
+              Pharmacy Name:{' '}
+              <span className="text-xl fond-semibold">
+                {singlePharmacy && singlePharmacy.pharmacyname}
+              </span>
+            </h1>
             <button
               data-modal-target="crud-modal"
               data-modal-toggle="crud-modal"
@@ -465,7 +520,7 @@ const MedicineListTable = () => {
                     Medicine Name
                   </th>{' '}
                   <th scope="col" className="px-6 py-3">
-                    Medicine Type 
+                    Medicine Type
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Quantity
@@ -524,8 +579,10 @@ const MedicineListTable = () => {
       {isOpen && (
         <AddMedicineModal
           handleClose={handleClose}
-          data={data}
-          handleChange={handleChange}
+          medicineData={medicineData}
+          stockData={stockData}
+          handleChangeMedicine={handleChangeMedicine}
+          handleChangeStock={handleChangeStock}
           handleSubmit={handleSubmit}
         />
       )}

@@ -36,31 +36,27 @@ const UptMedicineModal = ({
       <div className="p-6 space-y-6">
         <form className="p-4 md:p-5" onSubmit={handleUptSubmit}>
           <div className="grid gap-4 mb-4 grid-cols-2">
-            <div className="col-span-2">
-              <label
-                for="name"
-                className="block mb-2 text-sm font-medium text-gray-900 "
-              >
-                Medicine Name
+          <div className="col-span-2">
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              Medicine Name
               </label>
               <input
                 type="text"
-                name="medicineName"
-                value={uptData.medicineName}
+                name="medicinename"
+                value={uptData.medicinename}
                 onChange={handleUptChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                placeholder="ex:- napa"
+                placeholder=""
                 required
               />
             </div>
             <div className="col-span-2 sm:col-span-1">
               <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                Quantity
+                Medicine Generic Name
               </label>
               <input
-                type="number"
-                name="medicineQty"
-                value={uptData.medicineQty}
+                name="genericname"
+                value={uptData.genericname}
                 onChange={handleUptChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder=""
@@ -82,12 +78,55 @@ const UptMedicineModal = ({
             </div>
             <div className="col-span-2 sm:col-span-1">
               <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                Quantity
+              </label>
+              <input
+                type="number"
+                name="medicineQty"
+                value={uptData.medicineQty}
+                onChange={handleUptChange}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                placeholder=""
+                required
+              />
+            </div>
+    
+            <div className="col-span-2 sm:col-span-1">
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
                 Unit Price
               </label>
               <input
                 type="number"
                 name="unitPrice"
                 value={uptData.unitPrice}
+                onChange={handleUptChange}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                placeholder=""
+                required=""
+              />
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                Issue Date
+              </label>
+              <input
+                type="date"
+                name=""
+                // value={uptData.unitPrice}
+                onChange={handleUptChange}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                placeholder=""
+                required=""
+              />
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                Expired Date
+              </label>
+              <input
+                type="date"
+                name=""
+                // value={uptData.unitPrice}
                 onChange={handleUptChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder=""
@@ -122,7 +161,7 @@ const UptMedicineModal = ({
                 type="submit"
                 className="text-white inline-flex items-center bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center "
               >
-                Update
+                Submit
               </button>
             </div>
           </div>

@@ -1,8 +1,11 @@
 import { useState,useRef,useEffect } from "react";
 import navLogo from '../../assests/logo/logo.png'
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/authContext/AuthContextProvider";
 
 const Navbar = () => {
+  const {user} = useAuth()
+  console.log(user)
 
   
   const [menuOpen, setMenuOpen] = useState(false);
@@ -71,9 +74,9 @@ const Navbar = () => {
               <div className="px-5 py-3">
                 <div className="flex justify-between " >
                   <div>
-                    <span className="block text-xl text-gray-900 ">Pharma</span>
+                    <span className="block text-xl text-gray-900 ">{user && user.username}</span>
                     <span className="block text-sm  text-gray-500 truncate ">
-                     pharma.com
+                     {user && user.email}
                     </span>
                   </div>
                   <div>
