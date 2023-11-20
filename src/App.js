@@ -15,30 +15,41 @@ import Patient from './pages/privatePages/pharmachist/patient/index.js';
 
 //patient private pages
 import PatientHomePage from './pages/privatePages/patient/PatientHomePage.js';
+import AuthContextProvider from './context/authContext/AuthContextProvider.js';
+import PrivateRoute from './utils/PrivateRoute.js';
+import PatientMedicineListTable from './components/patient/medicine/table/PatientMedicineListTable.js';
 
 function App() {
   return (
     <>
-      <Routes>
-        {/* public pages start */}
-        <Route path="/" element={<PublicHome />} />
-        <Route path="/auth" element={<Login />} />
-        {/* public pages end */}
+      <AuthContextProvider>
+        <Routes>
+          {/* public pages start */}
+          <Route path="/" element={<PublicHome />} />
+          <Route path="/auth" element={<Login />} />
+          {/* public pages end */}
 
-        {/* Pharmachist layout start */}
-        <Route element={<PharamacistLayout />}>
-          <Route path="/pharma/home" element={<PharmachistHomePage />} />
-          <Route path="/pharma/medicine-list" element={<Medicine />} />
-          <Route path="/pharma/patient-list" element={<Patient />} />
-        </Route>
-        {/* Pharmachist layout end */}
+          <Route element={<PrivateRoute />}>
+            {/* Pharmachist layout start */}
+            <Route element={<PharamacistLayout />}>
+              <Route path="/pharma/home" element={<PharmachistHomePage />} />
+              <Route path="/pharma/medicine-list/:id" element={<Medicine />} />
+              <Route path="/pharma/patient-list/:id" element={<Patient />} />
+            </Route>
+            {/* Pharmachist layout end */}
 
-        {/* Patient layout start */}
-        <Route element={<PatientLayout />}>
-          <Route path="/patient/home" element={<PatientHomePage />} />
-        </Route>
-        {/* Patient layout end */}
-      </Routes>
+            {/* Patient layout start */}
+            <Route element={<PatientLayout />}>
+              <Route path="/patient/home" element={<PatientHomePage />} />
+              <Route
+                path="/patient/medicine-list"
+                element={<PatientMedicineListTable />}
+              />
+            </Route>
+            {/* Patient layout end */}
+          </Route>
+        </Routes>
+      </AuthContextProvider>
     </>
   );
 }

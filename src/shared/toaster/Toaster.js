@@ -7,7 +7,7 @@ const toasterMessage = (data, error = 'success') => {
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
-    background: '#343A46',
+    background: '#D8D7D6',
     color: 'white',
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer);

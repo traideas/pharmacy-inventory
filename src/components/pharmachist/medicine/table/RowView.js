@@ -10,8 +10,8 @@ const RowView = ({
   item,
   index,
   _DATA,
-  setDataList,
   perPage,
+  setDataList,
   handleUptSubmit,
   uptData,
   setUptData,
@@ -27,10 +27,21 @@ const RowView = ({
 
   const handleUptClose = () => setIsUptOpen(false);
 
+  const currentDate = new Date(item.issueDate);
+  const expireDate = new Date(item.expireDate);
+  const daysUntilExpiration = Math.floor((expireDate - currentDate) / (1000 * 60 * 60 * 24));
+
+  let expirationMessage = '';
+  if (daysUntilExpiration <= 0) {
+    expirationMessage = 'Expired';
+  } else if (daysUntilExpiration <= 7) {
+    expirationMessage = `(Expire will in ${daysUntilExpiration} days)`;
+  }
+
   const handleDelete = async (id) => {
     if (!id) return toasterMessage('data not found', 'warning');
     showConfirmationDeletePopup(() => {
-      const deleteEmplyType = async () => {
+      const deleteMedicine = async () => {
         try {
           await getRequest(`/setting/emplytype/rmv/${id}`).then((res) => {
              // setDataList((prev) => prev?.filter((item) => item?._id !== id));
@@ -42,10 +53,11 @@ const RowView = ({
         }
       };
 
-      deleteEmplyType();
+      deleteMedicine();
     });
   };
 
+  //console.log('item in rowview', item)
   return (
     <>
       <tr className="hover:bg-gray-100 text-center ">
@@ -53,13 +65,19 @@ const RowView = ({
           {_DATA.currentPage * perPage + index + 1 - perPage}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-black">
-          {item.medicineName}
+          {item.medicinename}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-black">
-          {item.medicineType}
+          {item.genericname}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-black">
+          {item.type}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-black">
+          {item.strength}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
-          {item.medicineQty}
+          {item.quantity}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
           {item.unitPrice}
@@ -68,17 +86,17 @@ const RowView = ({
           {item.issueDate}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
-          {item.exDate}
-          <span className="text-red-600 font-semibold">
-            {' '}
-            (Expired in 7d's){' '}
+          {item.expireDate}
+          <span className="text-red-600 font-semibold ml-1">
+            
+            {expirationMessage && expirationMessage}
           </span>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
-          {item.status === true ? <InStockChip /> : <OutOfStockChip />}
+          {item.quantity === 0 ? <OutOfStockChip />:  <InStockChip />}
         </td>
         <td className="px-6 py-4 text-center flex justify-center  gap-x-4 text-sm font-medium">
-          <button onClick={handleUptOpen}>
+          {/* <button onClick={handleUptOpen}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -93,7 +111,7 @@ const RowView = ({
                 d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
               />
             </svg>
-          </button>
+          </button> */}
           <div onClick={() => handleDelete(item._id)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
