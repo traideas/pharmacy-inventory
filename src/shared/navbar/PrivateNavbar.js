@@ -1,26 +1,16 @@
-import { useState,useRef,useEffect } from "react";
-import navLogo from '../../assests/logo/logo.png'
-import { Link } from "react-router-dom";
-import { useAuth } from "../../context/authContext/AuthContextProvider";
+import { useState, useRef, useEffect } from 'react';
+import navLogo from '../../assests/logo/logo.png';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/authContext/AuthContextProvider';
 
 const Navbar = () => {
-  const {user} = useAuth()
-  console.log(user)
+  const { user, logout } = useAuth();
+  //console.log(user)
+  let navigate = useNavigate();
 
-  
   const [menuOpen, setMenuOpen] = useState(false);
   const avatarRef = useRef(null);
   const menuRef = useRef(null);
-
-
-
-  const handleToggle = () => {
-    //setIsChecked(!isChecked);
-
-  };
-
-
-
 
   // Function to handle button click
   const handleButtonClick = () => {
@@ -29,7 +19,11 @@ const Navbar = () => {
 
   // Function to close the menu when clicking outside
   const handleDocumentClick = (event) => {
-    if (menuOpen && !avatarRef.current.contains(event.target) && !menuRef.current.contains(event.target)) {
+    if (
+      menuOpen &&
+      !avatarRef.current.contains(event.target) &&
+      !menuRef.current.contains(event.target)
+    ) {
       setMenuOpen(false);
     }
   };
@@ -47,21 +41,24 @@ const Navbar = () => {
   return (
     <nav className="bg-[#E0F4FF] border-gray-200 relative">
       <div className="px-10 flex flex-wrap items-center justify-between">
-        <Link to="/pharma/home" className="flex items-center">
+        <Link
+          to={user && user.usertype === 2 ? '/pharma/home' : '/patient/home'}
+          className="flex items-center"
+        >
           <img src={navLogo} className="h-16 w-16" alt="Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap">
-          Pharma Inventory
+            Pharma Inventory
           </span>
         </Link>
         <div className="p-1 hover:border-blue-500 hover:p-1 hover:rounded-full">
           <button
-           
             className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0"
             id="user-menu-button"
             aria-expanded={menuOpen}
             data-dropdown-toggle="user-dropdown"
             data-dropdown-placement="bottom"
-            ref={avatarRef} onClick={handleButtonClick}
+            ref={avatarRef}
+            onClick={handleButtonClick}
           >
             <img
               className="w-8 h-8 rounded-full"
@@ -70,13 +67,18 @@ const Navbar = () => {
             />
           </button>
           {menuOpen && (
-            <div className="z-10 absolute w-60 border border-gray-400 lg:w-80 md:w-80 md:mr-2 lg:mr-2 right-0 top-full list-none bg-gray-50 py-3 divide-y divide-gray-100 rounded-lg shadow" ref={menuRef}>
+            <div
+              className="z-10 absolute w-60 border border-gray-400 lg:w-80 md:w-80 md:mr-2 lg:mr-2 right-0 top-full list-none bg-gray-50 py-3 divide-y divide-gray-100 rounded-lg shadow"
+              ref={menuRef}
+            >
               <div className="px-5 py-3">
-                <div className="flex justify-between " >
+                <div className="flex justify-between ">
                   <div>
-                    <span className="block text-xl text-gray-900 ">{user && user.username}</span>
+                    <span className="block text-xl text-gray-900 ">
+                      {user && user.username}
+                    </span>
                     <span className="block text-sm  text-gray-500 truncate ">
-                     {user && user.email}
+                      {user && user.email}
                     </span>
                   </div>
                   <div>
@@ -100,8 +102,10 @@ const Navbar = () => {
                 </div>
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
-
-                <Link to="/">
+                <div
+                  onClick={() => logout(navigate)}
+                  className="cursor-pointer"
+                >
                   <li className="flex flex-row items-center ml-4 ">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -118,11 +122,11 @@ const Navbar = () => {
                       />
                     </svg>
 
-                    <p className="block px-2 py-2 text-md text-gray-700  ">
-                     Sign Out
+                    <p className="block px-2 py-2 text-md text-gray-700 ">
+                      Sign Out
                     </p>
                   </li>
-                </Link>
+                </div>
               </ul>
             </div>
           )}

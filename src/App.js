@@ -17,6 +17,7 @@ import Patient from './pages/privatePages/pharmachist/patient/index.js';
 import PatientHomePage from './pages/privatePages/patient/PatientHomePage.js';
 import AuthContextProvider from './context/authContext/AuthContextProvider.js';
 import PrivateRoute from './utils/PrivateRoute.js';
+import PatientMedicineListTable from './components/patient/medicine/table/PatientMedicineListTable.js';
 
 function App() {
   return (
@@ -40,6 +41,10 @@ function App() {
             {/* Patient layout start */}
             <Route element={<PatientLayout />}>
               <Route path="/patient/home" element={<PatientHomePage />} />
+              <Route
+                path="/patient/medicine-list"
+                element={<PatientMedicineListTable />}
+              />
             </Route>
             {/* Patient layout end */}
           </Route>

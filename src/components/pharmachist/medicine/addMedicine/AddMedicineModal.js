@@ -37,7 +37,7 @@ const AddMedicineModal = ({
       <div className="p-6 space-y-6">
         <form className="p-4 md:p-5" onSubmit={handleSubmit}>
           <div className="grid gap-4 mb-4 grid-cols-2">
-            <div className="col-span-2">
+            <div className="col-span-2 sm:col-span-1">
               <label className="block mb-2 text-sm font-medium text-gray-900 ">
                 Medicine Name
               </label>
@@ -74,6 +74,19 @@ const AddMedicineModal = ({
                 onChange={handleChangeMedicine}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder=""
+                required
+              />
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                Medicine Strength
+              </label>
+              <input
+                name="strength"
+                value={medicineData.strength}
+                onChange={handleChangeMedicine}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                placeholder="500mg"
                 required
               />
             </div>

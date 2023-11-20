@@ -8,6 +8,7 @@ import AddMedicineModal from '../addMedicine/AddMedicineModal';
 import useRequest from '../../../../apiServices/useRequest';
 
 import { useLocation, Link, useParams } from 'react-router-dom';
+import toasterMessage from '../../../../shared/toaster/Toaster';
 
 const DataList = [
   {
@@ -297,6 +298,7 @@ const MedicineListTable = () => {
     genericname: '',
     type: '',
     desc: '',
+    strength:''
   });
 
   const [stockData, setStockData] = useState({
@@ -307,7 +309,7 @@ const MedicineListTable = () => {
   });
 
   //upt state
-  const [uptData, setUptData] = useState(null);
+  const [uptData, setUptData] = useState(null)
 
   //modal for add medicine
   const [isOpen, setIsOpen] = useState(false);
@@ -346,7 +348,7 @@ const MedicineListTable = () => {
       setLoading(true);
       await getRequest(`/api/medicine`)
         .then((res) => {
-          console.log(res.data.data);
+          //console.log(res.data.data);
           // setDataList(res.data.data)
           setLoading(false);
         })
@@ -364,7 +366,7 @@ const MedicineListTable = () => {
   const fetchSinglePharmacy = async () => {
     await getRequest(`api/pharmacy/${id}`)
       .then((res) => {
-        console.log(res.data.data);
+        //console.log(res.data.data);
         setSinglePharmacy(res.data.data);
       })
       .catch((err) => {
@@ -376,6 +378,40 @@ const MedicineListTable = () => {
     fetchSinglePharmacy();
   }, []);
 
+  // const fetchMedicalList = async() => {
+  //   try {
+  //     setLoading(true)
+  //     await getRequest(`/api/medicine`).then((medData) => {
+  //       if(medData.data.error === true){
+  //         setLoading(false)
+  //         return toasterMessage(`${medData.data.message}`, 'warning')
+  //       }else{
+  //          getRequest(`/api/stock`).then((stockData) => {
+  //           let finalData = {
+  //             ...medData.data.data.result,
+  //             ...stockData.data.data.result
+  //           }
+  //           console.log('fetch final data', finalData)
+  //           setDataList(finalData)
+  //           setLoading(false)
+  //          }).catch((stockErr) => {
+  //           setLoading(false)
+  //           return toasterMessage(`Stock data fetch server error`, 'error')
+  //         })
+  //       }
+  //     }).catch((medErr) => {
+  //       setLoading(false)
+  //       return toasterMessage(`Medicine data fetch server error`, 'error')})
+  //   } catch (error) {
+      
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   fetchMedicalList()
+  // }, [])
+
+    // dataList.length > 0 ? ( setDataList((prev) => [...prev, res.data.data])) : (setDataList([res.data.data]))
   //for crt
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -385,24 +421,47 @@ const MedicineListTable = () => {
     };
     try {
       await postRequest(`/api/medicine/create`, medicineFinalData)
-        .then((res) => {
-          console.log(res.data.data);
-          if (res.data.error === true) {
-            console.log(res.data.message);
+        .then((medRes) => {
+          console.log(medRes.data.data);
+          if (medRes.data.error === true) {
+            //console.log(medRes.data.message);
+            return toasterMessage(`${medRes.data.message}`, 'error')
           } else {
             let stockFinalData = {
               ...stockData,
-              medicineId: res.data.data.medicineId,
+              medicineId: medRes.data.data._id,
             };
             postRequest(`/api/stock/create`, stockFinalData)
               .then((res) => {
-                console.log(res.data.data);
+                if(res.data.error === true){
+                  return toasterMessage(`${res.data.message}`, 'error')
+                }else{
+                  let finalData = {
+                    ...medRes.data.data,
+                    ...res.data.data
+                  }
+                  dataList.length > 0 ? ( setDataList((prev) => [...prev, finalData])) : (setDataList([finalData]))
+                  setMedicineData({
+                    medicinename: '',
+                    genericname: '',
+                    type: '',
+                    desc: '',
+                    strength:''
+                  })
+                  setStockData({
+                    issueDate: '',
+                    expireDate: '',
+                    unitPrice: '',
+                    quantity: '',
+                  })
+                  handleClose()
+                }
+               
               })
               .catch((err) => {
                 console.log(err);
               });
           }
-          // dataList.length > 0 ? ( setDataList((prev) => [...prev, res.data.data])) : (setDataList([res.data.data]))
         })
         .catch((err) => {
           console.log(err, 'from api call');
@@ -413,17 +472,17 @@ const MedicineListTable = () => {
   };
 
   //for update
+    //   setDataList((prev) =>
+          //   prev.map((item) =>
+          //     item._id === updateData._id ? res.data.data : item
+          //   )
+          // );
   const handleUptSubmit = async (e) => {
     e.preventDefault();
     try {
       await postRequest()
         .then((res) => {
           console.log(res.data.data);
-          //   setDataList((prev) =>
-          //   prev.map((item) =>
-          //     item._id === updateData._id ? res.data.data : item
-          //   )
-          // );
         })
         .catch((err) => {
           console.log(err, 'from api call');
@@ -438,12 +497,16 @@ const MedicineListTable = () => {
   }, []);
 
   const PER_PAGE = 25;
-  const count = Math.ceil(DataList.length / PER_PAGE);
-  const _DATA = usePagination(DataList, PER_PAGE);
+  const count = Math.ceil(dataList.length / PER_PAGE);
+  const _DATA = usePagination(dataList, PER_PAGE);
+
+  if(loading) return <p>loading...</p>
+
+  //console.log('datalist', dataList)
 
   return (
     <div className="container-2xl">
-      {DataList.length === 0 ? (
+      {dataList.length === 0 ? (
         <div className="text-center mt-28">
           <h1>
             No meidicine list exists,{' '}
@@ -479,7 +542,7 @@ const MedicineListTable = () => {
               Add Medicine
             </button>
           </div>
-          <div className="pb-4 bg-white ">
+          {/* <div className="pb-4 bg-white ">
             <label for="table-search" className="sr-only">
               Search
             </label>
@@ -508,7 +571,7 @@ const MedicineListTable = () => {
                 placeholder="Search by medicine name"
               />
             </div>
-          </div>
+          </div> */}
           <div className="flex flex-col border border-gray-200 mt-2">
             <Table>
               <thead class="sticky top-0 text-xs text-gray-700 uppercase bg-gray-50">
@@ -520,7 +583,13 @@ const MedicineListTable = () => {
                     Medicine Name
                   </th>{' '}
                   <th scope="col" className="px-6 py-3">
+                    Medicine Generic Name
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Medicine Type
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Medicine Strength
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Quantity
@@ -538,12 +607,12 @@ const MedicineListTable = () => {
                     Status
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Actions
+                    Action
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 ">
-                {DataList.length > 0
+                {dataList.length > 0
                   ? _DATA
                       .currentData()
                       .map((item, index) => (
@@ -562,7 +631,7 @@ const MedicineListTable = () => {
                   : ''}
               </tbody>
             </Table>
-            {DataList.length > 0 && (
+            {dataList.length > 0 && (
               <div className="mr-2">
                 <Pagination
                   count={count}

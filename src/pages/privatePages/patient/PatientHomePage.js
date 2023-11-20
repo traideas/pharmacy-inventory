@@ -1,18 +1,11 @@
-import React, { useState } from 'react';
-import PatientMedicineListTable from '../../../components/patient/medicine/table/PatientMedicineListTable';
+import React from 'react';
+import PatientProfile from '../../../components/patient/profile/PatientProfile';
 
 const PatientHomePage = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const handleOpen = () => setIsOpen(!isOpen);
-  const handleClose = () => setIsOpen(false);
   
   return (
     <div>
-      <PatientMedicineListTable
-        isOpen={isOpen}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
-      />
+      <PatientProfile />
     </div>
   );
 };

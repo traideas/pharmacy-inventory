@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Pharmacy from '../pharmacy/Pharmacy';
 import toasterMessage from '../../shared/toaster/Toaster';
 import { useAuth } from '../../context/authContext/AuthContextProvider';
 
 const roleData = [
   {
-    userType: 1,
+    usertype: 1,
     title: 'Patient',
   },
   {
-    userType: 2,
+    usertype: 2,
     title: 'Pharmacist',
   },
 ];
@@ -51,13 +50,24 @@ const SignUpForm = ({ toggleSignIn }) => {
       data.email,
       data.password,
       data.password_confirmation,
-      data.usertype
+      data.usertype,
+      data.address,
+      data.phonenumber
     );
     if (isError === true) {
       return toasterMessage('Somthing went wrong', 'error');
     } else {
       // setNext(true);
       // setShowPharma(true);
+      setData({
+        username: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        usertype: null,
+        address: '',
+        phonenumber: '',
+      })
       return toasterMessage('Registration success, Now Login plz');
     }
   };
@@ -66,6 +76,7 @@ const SignUpForm = ({ toggleSignIn }) => {
   //   setNext(!next);
   //   setShowPharma(!showPharma);
   // };
+  console.log(data)
 
   return (
     <div>
@@ -199,8 +210,9 @@ const SignUpForm = ({ toggleSignIn }) => {
             }
             className="p-4 pe-12 shadow-sm border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
           >
+              <option>select role</option>
             {roleData.map((item, index) => (
-              <option key={index} value={item.userType}>
+              <option key={index} value={item.usertype}>
                 {item.title}
               </option>
             ))}

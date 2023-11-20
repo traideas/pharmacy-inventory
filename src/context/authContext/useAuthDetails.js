@@ -20,14 +20,14 @@ const useAuthDetails = () => {
 
   const token = getToken();
 
-  const loginUser = (email, password, setNext, setShowPharma, navigate) => {
+  const loginUser = (username, password, navigate) => {
     setIsLoading(true);
     postRequest(loginUrl, {
-      email,
+      username,
       password,
     })
       .then((res) => {
-      //  console.log(res.data, 'login api res');
+        //  console.log(res.data, 'login api res');
         if (res.data.error === true) {
           setIsLoading(false);
           setIsError(true);
@@ -35,7 +35,7 @@ const useAuthDetails = () => {
         } else {
           setIsLoading(false);
           setIsError(false);
-         // console.log(res.data.data, 'login token');
+          // console.log(res.data.data, 'login token');
           sessionStorage.setItem('_token', res.data.data);
           http
             .get(userDetailUrl, {
@@ -44,23 +44,26 @@ const useAuthDetails = () => {
               },
             })
             .then((res) => {
-             // console.log(res.data.data, 'user info');
+              // console.log(res.data.data, 'user info');
               if (res.data.error === true) {
                 setIsLoading(false);
                 setIsError(true);
                 toasterMessage(res.data.message, 'error');
               } else {
                 setUser(res.data.data);
-                if (res.data.data.usertype === 1) {
-                  navigate(`/pharma/patient-list`);
-                } else if (res.data.data.usertype === 2) {
-                  setNext(true);
-                  setShowPharma(true);
+                if (res.data.data.usertype === 2) {
+                  navigate('/pharma/home');
+                  return toasterMessage('Login success as pharmachist');
+                } else if (res.data.data.usertype === 1) {
+                  navigate(`/patient/home`);
+                  return toasterMessage('Login success as patient');
+                } else {
+                  return toasterMessage(`No user type found`);
                 }
               }
             })
             .catch((err) => {
-            //  console.log(err, 'error from get user data');
+              //  console.log(err, 'error from get user data');
             });
         }
       })
@@ -68,7 +71,7 @@ const useAuthDetails = () => {
         setIsLoading(false);
         // setAuthError(error.response.data.message);
         setIsError(true);
-     //   console.log(error, 'from login user');
+        //   console.log(error, 'from login user');
       });
   };
 
@@ -78,7 +81,8 @@ const useAuthDetails = () => {
     password,
     password_confirmation,
     usertype,
-    navigate
+    address,
+    phonenumber
   ) => {
     setIsLoading(true);
     postRequest(registerUrl, {
@@ -87,11 +91,13 @@ const useAuthDetails = () => {
       password,
       password_confirmation,
       usertype,
+      address,
+      phonenumber,
     })
       .then((res) => {
         //localStorage.setItem("_token", res.data.accessToken);
         //let currToken = res.data.accessToken;
-       // console.log(res.data.data);
+        // console.log(res.data.data);
         if (res.data.error === true) {
           setIsLoading(false);
           setIsError(true);
@@ -111,7 +117,7 @@ const useAuthDetails = () => {
 
   useEffect(() => {
     setIsLoading(true);
-  //  console.log(token, 'from useeffect user info');
+    //  console.log(token, 'from useeffect user info');
     if (token) {
       http
         .get(userDetailUrl, {
@@ -121,37 +127,31 @@ const useAuthDetails = () => {
         })
         .then((res) => {
           if (res.data.error) {
-           
             setIsError(true);
           } else {
             setUser(res.data.data);
             setIsError(false);
-          
-          //  console.log(res.data.data, 'inside useeffect');
+
+            //  console.log(res.data.data, 'inside useeffect');
           }
-         setIsLoading(false);
+          setIsLoading(false);
         })
         .catch((error) => {
-         // console.log(error);
+          // console.log(error);
           setIsLoading(false);
         });
     } else {
       setIsLoading(false);
       setUser(null);
-      
     }
   }, []);
 
-  const logout = () => {
-    setIsLoading(true);
-    getRequest(logoutUrl)
-      .then((res) => {
-        setUser(null);
-        sessionStorage.removeItem('_token');
-      })
-      .finally(() => setIsLoading(false));
+  const logout = (navigate) => {
+    setUser(null);
+    sessionStorage.removeItem('_token');
+    navigate('/');
   };
- // console.log(user, 'user')
+  // console.log(user, 'user')
 
   return {
     registerUser,

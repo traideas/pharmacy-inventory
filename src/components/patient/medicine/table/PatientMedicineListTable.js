@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import usePagination from '../../../../customHooks/usePagination';
 import BackButton from '../../../../shared/button/backButton';
 import Table from '../../../../shared/table/Table';
@@ -18,7 +18,10 @@ const dataList = [
   },
 ];
 
-const PatientMedicineListTable = ({ isOpen, handleOpen, handleClose }) => {
+const PatientMedicineListTable = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => setIsOpen(!isOpen);
+  const handleClose = () => setIsOpen(false);
   const PER_PAGE = 25;
   const count = Math.ceil(dataList.length / PER_PAGE);
   const _DATA = usePagination(dataList, PER_PAGE);
@@ -45,7 +48,14 @@ const PatientMedicineListTable = ({ isOpen, handleOpen, handleClose }) => {
               {dataList.length} Prescribed Alert
             </h5>
             <p className="font-normal text-gray-700">
-              You have <span className='text-blue-500 font-semibold'>{dataList[0].medicineName}</span> medicine at <span className='text-red-600 font-semibold'>{dataList[0].time}</span>
+              You have{' '}
+              <span className="text-blue-500 font-semibold">
+                {dataList[0].medicineName}
+              </span>{' '}
+              medicine at{' '}
+              <span className="text-red-600 font-semibold">
+                {dataList[0].time}
+              </span>
             </p>
           </div>
         )}
