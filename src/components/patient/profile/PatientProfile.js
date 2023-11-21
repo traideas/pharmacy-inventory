@@ -5,7 +5,7 @@ const PatientProfile = () => {
   const { user } = useAuth();
  
    return (
-    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
+    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-8">
       <div className="px-6 py-6">
         <div className="flex justify-start items-center gap-x-5">
           <div>
