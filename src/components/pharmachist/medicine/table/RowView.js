@@ -17,7 +17,7 @@ const RowView = ({
   setUptData,
   handleUptChange,
 }) => {
-  const [, getRequest] = useRequest();
+  const [, getRequest, deleteRequest] = useRequest();
   const [isUptOpen, setIsUptOpen] = useState(false);
 
   const handleUptOpen = () => {
@@ -38,24 +38,46 @@ const RowView = ({
     expirationMessage = `(Expire will in ${daysUntilExpiration} days)`;
   }
 
-  const handleDelete = async (id) => {
-    if (!id) return toasterMessage('data not found', 'warning');
+    // setDataList((prev) => prev?.filter((item) => item?._id !== id));
+  const handleDelete = async (item) => {
+    if (item === null || !item._id) return toasterMessage('data not found', 'warning');
     showConfirmationDeletePopup(() => {
       const deleteMedicine = async () => {
         try {
-          await getRequest(`/setting/emplytype/rmv/${id}`).then((res) => {
-             // setDataList((prev) => prev?.filter((item) => item?._id !== id));
-          toasterMessage('Data deleted success');
-          })
-        } catch (err) {
-          console.error(err);
-          toasterMessage('Somthing went wrong', 'error');
+          await deleteRequest(`/api/medicine/delete/${item.medicineId}`,)
+            .then((medRes) => {
+              console.log(medRes.data.data);
+              if (medRes.data.error === true) {
+                //console.log(medRes.data.message);
+                return toasterMessage(`${medRes.data.message}`, 'error')
+              } else {
+                deleteRequest(`/api/stock/delete/${item._id}`)
+                  .then((res) => {
+                    if(res.data.error === true){
+                      return toasterMessage(`${res.data.message}`, 'error')
+                    }else{
+                      setDataList((prev) => prev?.filter((i) => i?._id !== item._id));
+                      return toasterMessage('Data delete successfully')
+                    }
+                   
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
+            })
+            .catch((err) => {
+              console.log(err, 'from api call');
+            });
+        } catch (error) {
+          console.log(error, 'from try catch');
         }
       };
 
       deleteMedicine();
     });
   };
+
 
   //console.log('item in rowview', item)
   return (
@@ -112,7 +134,7 @@ const RowView = ({
               />
             </svg>
           </button> */}
-          <div onClick={() => handleDelete(item._id)}>
+          <div onClick={() => handleDelete(item)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
