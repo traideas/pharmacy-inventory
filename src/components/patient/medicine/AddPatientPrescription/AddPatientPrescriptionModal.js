@@ -1,16 +1,10 @@
 import React from 'react';
+import Modal from '../../../../shared/modal/Modal';
 
-const AddPatientPrescriptionModal = ({ handleClose }) => {
+const AddPatientPrescriptionModal = ({ handleClose, prescriptionInputData, handleChange, handleSubmit, currentDate }) => {
   return (
-    <div
-      id="defaultModal"
-      className="overflow-y-auto overflow-x-hidden fixed right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center  flex bg-black bg-opacity-50"
-      aria-modal="true"
-      role="dialog"
-    >
-      <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
-        <div className="relative bg-white rounded-lg shadow ">
-          <div className="flex justify-between items-start p-4 rounded-t border-b">
+    <Modal>
+        <div className="flex justify-between items-start p-4 rounded-t border-b">
             <h3 className="text-xl font-semibold text-gray-900 ">
               Add Prescribed Medicine
             </h3>
@@ -32,24 +26,23 @@ const AddPatientPrescriptionModal = ({ handleClose }) => {
                   clipRule="evenodd"
                 ></path>
               </svg>
-              <span className="sr-only">Close modal</span>
             </button>
           </div>
 
           <div className="p-6 space-y-6">
-            <form className="p-4 md:p-5">
+            <form className="p-4 md:p-5" onSubmit={handleSubmit}>
               <div className="grid gap-4 mb-4 grid-cols-2">
                 <div className="col-span-2">
                   <label
-                    for="name"
                     className="block mb-2 text-sm font-medium text-gray-900 "
                   >
-                    Medicine Name
+                    Prescribed Medicine Name
                   </label>
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="patientmedicineName"
+                    value={prescriptionInputData.patientmedicineName}
+                    onChange={handleChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                     placeholder="ex:- napa"
                     required=""
@@ -57,35 +50,41 @@ const AddPatientPrescriptionModal = ({ handleClose }) => {
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                    Duration
+                    Start Date
                   </label>
                   <input
-                    type="number"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                    placeholder="ex:- 15 day's"
-                    required=""
+                    type="date"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    name="startdate"
+                    value={prescriptionInputData.startdate}
+                    onChange={handleChange}
+                    min={currentDate}
                   />
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                    Dosage
+                    End Date
                   </label>
                   <input
-                    type="number"
+                    type="date"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                    placeholder=""
-                    required=""
+                    name="enddate"
+                    value={prescriptionInputData.enddate}
+                    onChange={handleChange}
+                    min={currentDate}
                   />
                 </div>
               </div>
               <div>
-                <h3 className="block mb-2 text-sm font-medium text-gray-900 ">Time</h3>
+                <h3 className="block mb-2 text-sm font-medium text-gray-900 ">Time Schedule</h3>
                 <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border-none  rounded-lg sm:flex  ">
                 <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r ">
                   <div className="flex items-center ps-3">
                       <input
                         type="checkbox"
-                        value=""
+                        checked={prescriptionInputData.morning}
+                        name='morning'
+                        onChange={handleChange}
                         className="w-4 h-4  bg-gray-100 border-gray-300 rounded"
                       />
                       <label
@@ -100,7 +99,9 @@ const AddPatientPrescriptionModal = ({ handleClose }) => {
                   <div className="flex items-center ps-3">
                       <input
                         type="checkbox"
-                        value=""
+                        checked={prescriptionInputData.midday}
+                        name='midday'
+                        onChange={handleChange}
                         className="w-4 h-4  bg-gray-100 border-gray-300 rounded"
                       />
                       <label
@@ -115,7 +116,9 @@ const AddPatientPrescriptionModal = ({ handleClose }) => {
                   <div className="flex items-center ps-3">
                       <input
                         type="checkbox"
-                        value=""
+                        checked={prescriptionInputData.evening}
+                        name='evening'
+                        onChange={handleChange}
                         className="w-4 h-4  bg-gray-100 border-gray-300 rounded"
                       />
                       <label
@@ -130,7 +133,9 @@ const AddPatientPrescriptionModal = ({ handleClose }) => {
                   <div className="flex items-center ps-3">
                       <input
                         type="checkbox"
-                        value=""
+                        checked={prescriptionInputData.dinner}
+                        name='dinner'
+                        onChange={handleChange}
                         className="w-4 h-4  bg-gray-100 border-gray-300 rounded"
                       />
                       <label
@@ -151,7 +156,9 @@ const AddPatientPrescriptionModal = ({ handleClose }) => {
                     Additional Description
                   </label>
                   <textarea
-                    id="description"
+                     name="desc"
+                     value={prescriptionInputData.desc}
+                     onChange={handleChange}
                     rows="4"
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300  "
                     placeholder=""
@@ -169,7 +176,7 @@ const AddPatientPrescriptionModal = ({ handleClose }) => {
                 </div>
                 <div>
                   <button
-                    onClick={(e) => e.preventDefault()}
+                    type='submit'
                     className="text-white inline-flex items-center bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                   >
                     Submit
@@ -178,9 +185,7 @@ const AddPatientPrescriptionModal = ({ handleClose }) => {
               </div>
             </form>
           </div>
-        </div>
-      </div>
-    </div>
+    </Modal>
   );
 };
 

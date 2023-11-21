@@ -17,7 +17,7 @@ import Patient from './pages/privatePages/pharmachist/patient/index.js';
 import PatientHomePage from './pages/privatePages/patient/PatientHomePage.js';
 import AuthContextProvider from './context/authContext/AuthContextProvider.js';
 import PrivateRoute from './utils/PrivateRoute.js';
-import PatientMedicineListTable from './components/patient/medicine/table/PatientMedicineListTable.js';
+import PatientMedicineListTable from './components/patient/medicine/prescribedMedicineList/PatientMedicineList.js';
 
 function App() {
   return (

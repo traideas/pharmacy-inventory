@@ -298,7 +298,7 @@ const MedicineListTable = () => {
     genericname: '',
     type: '',
     desc: '',
-    strength:''
+    strength: '',
   });
 
   const [stockData, setStockData] = useState({
@@ -309,7 +309,7 @@ const MedicineListTable = () => {
   });
 
   //upt state
-  const [uptData, setUptData] = useState(null)
+  const [uptData, setUptData] = useState(null);
 
   //modal for add medicine
   const [isOpen, setIsOpen] = useState(false);
@@ -337,7 +337,7 @@ const MedicineListTable = () => {
   const handleUptChange = (e) => {
     const value = e.target.value;
     setUptData({
-      ...medicineData,
+      ...uptData,
       [e.target.name]: value,
     });
   };
@@ -346,10 +346,10 @@ const MedicineListTable = () => {
   const fetchMedicineList = async () => {
     try {
       setLoading(true);
-      await getRequest(`/api/medicine`)
+      await getRequest(`/api/pharmacy/medicine-list/${id}`)
         .then((res) => {
           //console.log(res.data.data);
-          // setDataList(res.data.data)
+          setDataList(res.data.data);
           setLoading(false);
         })
         .catch((err) => {
@@ -362,9 +362,13 @@ const MedicineListTable = () => {
     }
   };
 
+  useEffect(() => {
+    fetchMedicineList();
+  }, []);
+
   //get single pharmacy
   const fetchSinglePharmacy = async () => {
-    await getRequest(`api/pharmacy/${id}`)
+    await getRequest(`/api/pharmacy/${id}`)
       .then((res) => {
         //console.log(res.data.data);
         setSinglePharmacy(res.data.data);
@@ -403,7 +407,7 @@ const MedicineListTable = () => {
   //       setLoading(false)
   //       return toasterMessage(`Medicine data fetch server error`, 'error')})
   //   } catch (error) {
-      
+
   //   }
   // }
 
@@ -411,10 +415,31 @@ const MedicineListTable = () => {
   //   fetchMedicalList()
   // }, [])
 
-    // dataList.length > 0 ? ( setDataList((prev) => [...prev, res.data.data])) : (setDataList([res.data.data]))
+  // dataList.length > 0 ? ( setDataList((prev) => [...prev, res.data.data])) : (setDataList([res.data.data]))
   //for crt
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!medicineData.medicinename) {
+      return toasterMessage(`Plz enter medicine name`, 'warning');
+    }
+    if (!medicineData.genericname) {
+      return toasterMessage(`Plz enter medicine generic name`, 'warning');
+    }
+    if (!medicineData.type) {
+      return toasterMessage(`Plz enter medicine type name`, 'warning');
+    }
+    if (!stockData.issueDate) {
+      return toasterMessage(`Plz enter medicine issue date`, 'warning');
+    }
+    if (!stockData.expireDate) {
+      return toasterMessage(`Plz enter medicine expire date`, 'warning');
+    }
+    if (!stockData.quantity) {
+      return toasterMessage(`Plz enter medicine quantity`, 'warning');
+    }
+    if (!stockData.unitPrice) {
+      return toasterMessage(`Plz enter medicine unit price`, 'warning');
+    }
     let medicineFinalData = {
       ...medicineData,
       pharmacyId: id,
@@ -425,38 +450,40 @@ const MedicineListTable = () => {
           console.log(medRes.data.data);
           if (medRes.data.error === true) {
             //console.log(medRes.data.message);
-            return toasterMessage(`${medRes.data.message}`, 'error')
+            return toasterMessage(`${medRes.data.message}`, 'error');
           } else {
             let stockFinalData = {
               ...stockData,
               medicineId: medRes.data.data._id,
+              pharmacyId: id,
             };
             postRequest(`/api/stock/create`, stockFinalData)
               .then((res) => {
-                if(res.data.error === true){
-                  return toasterMessage(`${res.data.message}`, 'error')
-                }else{
+                if (res.data.error === true) {
+                  return toasterMessage(`${res.data.message}`, 'error');
+                } else {
                   let finalData = {
                     ...medRes.data.data,
-                    ...res.data.data
-                  }
-                  dataList.length > 0 ? ( setDataList((prev) => [...prev, finalData])) : (setDataList([finalData]))
+                    ...res.data.data,
+                  };
+                  dataList.length > 0
+                    ? setDataList((prev) => [...prev, finalData])
+                    : setDataList([finalData]);
                   setMedicineData({
                     medicinename: '',
                     genericname: '',
                     type: '',
                     desc: '',
-                    strength:''
-                  })
+                    strength: '',
+                  });
                   setStockData({
                     issueDate: '',
                     expireDate: '',
                     unitPrice: '',
                     quantity: '',
-                  })
-                  handleClose()
+                  });
+                  handleClose();
                 }
-               
               })
               .catch((err) => {
                 console.log(err);
@@ -472,17 +499,60 @@ const MedicineListTable = () => {
   };
 
   //for update
-    //   setDataList((prev) =>
-          //   prev.map((item) =>
-          //     item._id === updateData._id ? res.data.data : item
-          //   )
-          // );
-  const handleUptSubmit = async (e) => {
+  //   setDataList((prev) =>
+  //   prev.map((item) =>
+  //     item._id === updateData._id ? res.data.data : item
+  //   )
+  // );
+  const handleUptSubmit = async (e, uptData) => {
     e.preventDefault();
+    let medicineFinalData = {
+      medicinename: uptData.medicinename,
+      genericname: uptData.genericname,
+      type: uptData.type,
+      desc: uptData.desc,
+      strength: uptData.strength,
+      pharmacyId: id,
+    };
     try {
-      await postRequest()
-        .then((res) => {
-          console.log(res.data.data);
+      await postRequest(
+        `/api/medicine/update/${uptData.medicineId}`,
+        medicineFinalData
+      )
+        .then((medRes) => {
+          console.log(medRes.data.data);
+          if (medRes.data.error === true) {
+            //console.log(medRes.data.message);
+            return toasterMessage(`${medRes.data.message}`, 'error');
+          } else {
+            let stockFinalData = {
+              issueDate: uptData.issueDate,
+              expireDate: uptData.expireDate,
+              unitPrice: uptData.unitPrice,
+              quantity: uptData.quantity,
+              medicineId: medRes.data.data._id,
+              pharmacyId: id,
+            };
+            postRequest(`/api/stock/update/${uptData._id}`, stockFinalData)
+              .then((res) => {
+                if (res.data.error === true) {
+                  return toasterMessage(`${res.data.message}`, 'error');
+                } else {
+                  let finalData = {
+                    ...medRes.data.data,
+                    ...res.data.data,
+                  };
+                  setDataList((prev) =>
+                    prev.map((item) =>
+                      item._id === uptData._id ? finalData : item
+                    )
+                  );
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
         })
         .catch((err) => {
           console.log(err, 'from api call');
@@ -492,15 +562,11 @@ const MedicineListTable = () => {
     }
   };
 
-  useEffect(() => {
-    fetchMedicineList();
-  }, []);
-
   const PER_PAGE = 25;
   const count = Math.ceil(dataList.length / PER_PAGE);
   const _DATA = usePagination(dataList, PER_PAGE);
 
-  if(loading) return <p>loading...</p>
+  if (loading) return <p>loading...</p>;
 
   //console.log('datalist', dataList)
 

@@ -34,7 +34,7 @@ const UptMedicineModal = ({
     </div>
 
     <div className="p-6 space-y-6">
-      <form className="p-4 md:p-5" onSubmit={handleUptSubmit}>
+      <form className="p-4 md:p-5" onSubmit={(e) => handleUptSubmit(e, uptData)}>
         <div className="grid gap-4 mb-4 grid-cols-2">
           <div className="col-span-2 sm:col-span-1">
             <label className="block mb-2 text-sm font-medium text-gray-900 ">

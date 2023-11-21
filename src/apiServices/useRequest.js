@@ -8,8 +8,11 @@ const useRequest = () => {
   const getRequest = (url) => {
     return http.get(url);
   };
+  const deleteRequest = (url) => {
+    return http.delete(url)
+  };
 
-  return [postRequest, getRequest];
+  return [postRequest, getRequest, deleteRequest];
 };
 
 export default useRequest;
