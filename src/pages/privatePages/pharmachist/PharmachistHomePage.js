@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import useRequest from '../../../apiServices/useRequest';
-import BackButton from '../../../shared/button/backButton';
 import AddPharmacyModal from '../../../components/pharmacy/AddPharmacyModal';
 import { useAuth } from '../../../context/authContext/AuthContextProvider';
 import toasterMessage from '../../../shared/toaster/Toaster';
@@ -48,15 +46,21 @@ const PharmachistHomePage = () => {
 
   const fetchAllPhacrmacyData = async () => {
     try {
+      setLoading(true)
       await getRequest(`/api/pharmacy`)
         .then((res) => {
-          console.log(res.data.data);
+          //console.log(res.data.data);
           setDataList(res.data.data.result);
+          setLoading(false)
         })
         .catch((err) => {
+          setLoading(false)
           console.log(err);
         });
-    } catch (error) {}
+    } catch (error) {
+      setLoading(false)
+      return toasterMessage(`Server error`, 'error')
+    }
   };
 
   useEffect(() => {
@@ -116,6 +120,8 @@ const PharmachistHomePage = () => {
       deleteBranch();
     });
   };
+
+  if(loading) return <p>Loading...</p>
 
   return (
     <div className="container-2xl">

@@ -382,40 +382,6 @@ const MedicineListTable = () => {
     fetchSinglePharmacy();
   }, []);
 
-  // const fetchMedicalList = async() => {
-  //   try {
-  //     setLoading(true)
-  //     await getRequest(`/api/medicine`).then((medData) => {
-  //       if(medData.data.error === true){
-  //         setLoading(false)
-  //         return toasterMessage(`${medData.data.message}`, 'warning')
-  //       }else{
-  //          getRequest(`/api/stock`).then((stockData) => {
-  //           let finalData = {
-  //             ...medData.data.data.result,
-  //             ...stockData.data.data.result
-  //           }
-  //           console.log('fetch final data', finalData)
-  //           setDataList(finalData)
-  //           setLoading(false)
-  //          }).catch((stockErr) => {
-  //           setLoading(false)
-  //           return toasterMessage(`Stock data fetch server error`, 'error')
-  //         })
-  //       }
-  //     }).catch((medErr) => {
-  //       setLoading(false)
-  //       return toasterMessage(`Medicine data fetch server error`, 'error')})
-  //   } catch (error) {
-
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   fetchMedicalList()
-  // }, [])
-
-  // dataList.length > 0 ? ( setDataList((prev) => [...prev, res.data.data])) : (setDataList([res.data.data]))
   //for crt
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -515,14 +481,16 @@ const MedicineListTable = () => {
       pharmacyId: id,
     };
     try {
+      setLoading(true)
       await postRequest(
         `/api/medicine/update/${uptData.medicineId}`,
         medicineFinalData
       )
         .then((medRes) => {
-          console.log(medRes.data.data);
+          //console.log(medRes.data.data);
           if (medRes.data.error === true) {
             //console.log(medRes.data.message);
+            setLoading(false)
             return toasterMessage(`${medRes.data.message}`, 'error');
           } else {
             let stockFinalData = {
@@ -533,9 +501,11 @@ const MedicineListTable = () => {
               medicineId: medRes.data.data._id,
               pharmacyId: id,
             };
+            
             postRequest(`/api/stock/update/${uptData._id}`, stockFinalData)
               .then((res) => {
                 if (res.data.error === true) {
+                  setLoading(false)
                   return toasterMessage(`${res.data.message}`, 'error');
                 } else {
                   let finalData = {
@@ -544,21 +514,25 @@ const MedicineListTable = () => {
                   };
                   setDataList((prev) =>
                     prev.map((item) =>
-                      item._id === uptData._id ? finalData : item
+                      item._id === uptData._id ? uptData : item
                     )
                   );
+                  setLoading(false)
                 }
               })
               .catch((err) => {
-                console.log(err);
+                setLoading(false)
+                return toasterMessage(`${err}`, 'error')
               });
           }
         })
         .catch((err) => {
-          console.log(err, 'from api call');
+          setLoading(false)
+          return toasterMessage(`${err}`, 'error')
         });
     } catch (error) {
-      console.log(error, 'from try catch');
+      setLoading(false)
+      return toasterMessage(`${error}`, 'error')
     }
   };
 
@@ -595,8 +569,8 @@ const MedicineListTable = () => {
           <div className="flex justify-between items-center">
             <h1>
               Pharmacy Name:{' '}
-              <span className="text-xl fond-semibold">
-                {singlePharmacy && singlePharmacy.pharmacyname}
+              <span className="text-xl fond-bold">
+                { singlePharmacy && singlePharmacy.pharmacyname}
               </span>
             </h1>
             <button

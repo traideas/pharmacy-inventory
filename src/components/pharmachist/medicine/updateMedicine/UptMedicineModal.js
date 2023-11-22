@@ -7,7 +7,6 @@ const UptMedicineModal = ({
   handleUptChange,
   handleUptSubmit,
 }) => {
-    console.log(uptData, 'upt data')
   return (
     <Modal>
     <div className="flex justify-between items-start p-4 rounded-t border-b">

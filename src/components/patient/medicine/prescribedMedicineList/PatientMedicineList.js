@@ -65,10 +65,10 @@ const PatientMedicineList = () => {
 
   const fetchPrescriptionList = async() => {
     setLoading(true)
-    await getRequest(`/api/prescription`).then((res) => {
+    await getRequest(`/api/prescription/${user._id}`).then((res) => {
       if(res.data.error){
         setLoading(false)
-        return toasterMessage(`${res.data.error}`, 'warning')
+        return toasterMessage(`${res.data.message}`, 'warning')
       }else{
         setDataList(res.data.data.result)
         setLoading(false)
@@ -85,6 +85,9 @@ const PatientMedicineList = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user._id) return toasterMessage(`User not found`, 'warning');
+    if(!prescriptionInputData.patientmedicineName) return toasterMessage(`Plz enter medicine name`, 'warning')
+    if(!prescriptionInputData.startdate) return toasterMessage(`Plz enter medicine start date`, 'warning')
+    if(!prescriptionInputData.enddate) return toasterMessage(`Plz enter medicine end date`, 'warning')
     const finalData = {
       ...prescriptionInputData,
       patientId: user._id,
@@ -128,8 +131,8 @@ const PatientMedicineList = () => {
     midday: uptData.midday,
     evening: uptData.evening,
     dinner: uptData.dinner,
-    startdate: uptData.startDate,
-    enddate: uptData.endDate,
+    startdate: uptData.startdate,
+    enddate: uptData.enddate,
     desc: uptData.desc,
       patientId: user._id,
     };
