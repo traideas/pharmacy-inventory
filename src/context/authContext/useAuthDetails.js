@@ -48,7 +48,7 @@ const useAuthDetails = () => {
               if (res.data.error === true) {
                 setIsLoading(false);
                 setIsError(true);
-                toasterMessage(res.data.message, 'error');
+                return toasterMessage(res.data.message, 'error');
               } else {
                 setUser(res.data.data);
                 if (res.data.data.usertype === 2) {
@@ -58,7 +58,7 @@ const useAuthDetails = () => {
                   navigate(`/patient/home`);
                   return toasterMessage('Login success as patient');
                 } else {
-                  return toasterMessage(`No user type found`);
+                  return toasterMessage(`No user type found`, 'warning');
                 }
               }
             })
@@ -82,7 +82,9 @@ const useAuthDetails = () => {
     password_confirmation,
     usertype,
     address,
-    phonenumber
+    phonenumber,
+    age,
+    gender
   ) => {
     setIsLoading(true);
     postRequest(registerUrl, {
@@ -93,31 +95,27 @@ const useAuthDetails = () => {
       usertype,
       address,
       phonenumber,
+      age,
+      gender
     })
       .then((res) => {
-        //localStorage.setItem("_token", res.data.accessToken);
-        //let currToken = res.data.accessToken;
-        // console.log(res.data.data);
         if (res.data.error === true) {
           setIsLoading(false);
           setIsError(true);
           toasterMessage(res.data.message, 'warning');
         } else {
           setIsError(false);
-          //console.log(res.data.data)
           setIsLoading(false);
         }
       })
       .catch((error) => {
         setIsLoading(false);
         setIsError(true);
-        // setAuthError(error.response.data.message);
       });
   };
 
   useEffect(() => {
     setIsLoading(true);
-    //  console.log(token, 'from useeffect user info');
     if (token) {
       http
         .get(userDetailUrl, {
@@ -131,8 +129,6 @@ const useAuthDetails = () => {
           } else {
             setUser(res.data.data);
             setIsError(false);
-
-            //  console.log(res.data.data, 'inside useeffect');
           }
           setIsLoading(false);
         })

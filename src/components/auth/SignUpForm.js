@@ -14,6 +14,21 @@ const roleData = [
   },
 ];
 
+const genderData = [
+  {
+    id: 1,
+    title: 'Male',
+  },
+  {
+    id: 2,
+    title: 'Female',
+  },
+  {
+    id: 3,
+    title: 'Custom',
+  },
+];
+
 const SignUpForm = ({ toggleSignIn }) => {
   const { registerUser, isLoading, isError, authError } = useAuth();
   let navigate = useNavigate();
@@ -25,6 +40,8 @@ const SignUpForm = ({ toggleSignIn }) => {
     usertype: null,
     address: '',
     phonenumber: '',
+    age:'',
+    gender:''
   });
 
   const handleSubmit = (e) => {
@@ -42,7 +59,10 @@ const SignUpForm = ({ toggleSignIn }) => {
       return toasterMessage('Plz enter confirm password', 'warning');
     }
     if (!data.usertype) {
-      return toasterMessage('Plz enter user role', 'warning');
+      return toasterMessage('Plz select your role', 'warning');
+    }
+    if (!data.gender) {
+      return toasterMessage('Plz select your gender', 'warning');
     }
     //console.log(data, 'input data')
     registerUser(
@@ -52,7 +72,9 @@ const SignUpForm = ({ toggleSignIn }) => {
       data.password_confirmation,
       data.usertype,
       data.address,
-      data.phonenumber
+      data.phonenumber,
+      data.age,
+      data.gender
     );
     if (isError === true) {
       return toasterMessage('Somthing went wrong', 'error');
@@ -67,8 +89,10 @@ const SignUpForm = ({ toggleSignIn }) => {
         usertype: null,
         address: '',
         phonenumber: '',
+        age:'',
+        gender:''
       })
-      return toasterMessage('Registration success, Now Login plz');
+      return toasterMessage('Registration success, Now Plz Login');
     }
   };
 
@@ -76,7 +100,6 @@ const SignUpForm = ({ toggleSignIn }) => {
   //   setNext(!next);
   //   setShowPharma(!showPharma);
   // };
-  console.log(data)
 
   return (
     <div>
@@ -199,7 +222,37 @@ const SignUpForm = ({ toggleSignIn }) => {
             </span>
           </div>
         </div>
-
+        <div>
+          <div className="relative">
+            <input
+              type="number"
+              className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+              placeholder="Enter your age"
+              onChange={(e) =>
+                setData((prev) => ({ ...prev, age: e.target.value }))
+              }
+            />
+          </div>
+        </div>
+        <div>
+          <select
+            onChange={(e) =>
+              setData((prev) => ({
+                ...prev,
+                gender: e.target.value
+              }))
+            }
+            className="p-4 pe-12 shadow-sm border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
+          >
+              <option>Select gender</option>
+            {genderData.map((item, index) => (
+              <option key={index} value={item.title}>
+                {item.title}
+              </option>
+            ))}
+          </select>
+        </div>
+        
         <div>
           <select
             onChange={(e) =>
@@ -210,25 +263,13 @@ const SignUpForm = ({ toggleSignIn }) => {
             }
             className="p-4 pe-12 shadow-sm border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
           >
-              <option>select role</option>
+              <option>Select role</option>
             {roleData.map((item, index) => (
               <option key={index} value={item.usertype}>
                 {item.title}
               </option>
             ))}
           </select>
-        </div>
-        <div>
-          <div className="relative">
-            <input
-              type="text"
-              className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-              placeholder="Enter address"
-              onChange={(e) =>
-                setData((prev) => ({ ...prev, address: e.target.value }))
-              }
-            />
-          </div>
         </div>
         <div>
           <div className="relative">
@@ -242,6 +283,19 @@ const SignUpForm = ({ toggleSignIn }) => {
             />
           </div>
         </div>
+        <div>
+          <div className="relative">
+            <input
+              type="text"
+              className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+              placeholder="Enter address"
+              onChange={(e) =>
+                setData((prev) => ({ ...prev, address: e.target.value }))
+              }
+            />
+          </div>
+        </div>
+  
         {isLoading ? (
           <p>loading...</p>
         ) : (

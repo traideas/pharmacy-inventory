@@ -36,11 +36,11 @@ const LoginForm = ({ toggleSignUp }) => {
       data.password,
       navigate
     );
-    if (isError === true) {
-      return toasterMessage('Somthing went wrong', 'error');
-    } else {
-      return toasterMessage('Login Success');
-    }
+    // if (isError === true) {
+    //   return toasterMessage('Somthing went wrong', 'error');
+    // } else {
+    //   return toasterMessage('Login Success');
+    // }
   };
 
   return (

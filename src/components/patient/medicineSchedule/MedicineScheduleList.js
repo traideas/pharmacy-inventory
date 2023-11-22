@@ -3,20 +3,14 @@ import { Link } from 'react-router-dom';
 import useRequest from '../../../apiServices/useRequest';
 import toasterMessage from '../../../shared/toaster/Toaster';
 import { useAuth } from '../../../context/authContext/AuthContextProvider';
-import showConfirmationDeletePopup from '../../../shared/toaster/showConfirmationDltPopup';
 import MedicineSchedule from './MedicineSchedule';
 
 const MedicineScheduleList = () => {
   const { user } = useAuth();
-  const [postRequest, , deleteRequest] = useRequest();
+  const [postRequest] = useRequest();
 
   const [dataList, setDataList] = useState([]);
   const [loading, setLoading] = useState(false);
- 
-
-  const [showEdit, setShowEdit] = useState(false);
-
-  const handleCloseEdit = () => setShowEdit(false);
 
   const currentDate = new Date().toISOString().split('T')[0];
 
@@ -46,8 +40,6 @@ const MedicineScheduleList = () => {
     fetchPatientTodayMedicineSchedule();
   }, []);
 
-
-
   if (loading) return <p>Loading...</p>;
   return (
     <div>
@@ -71,14 +63,9 @@ const MedicineScheduleList = () => {
             <div className="mx-3 mt-2 mb-10" key={index}>
               <MedicineSchedule
                 data={data}
-                showEdit={showEdit}
-                key={index}
                 setDataList={setDataList}
                 setLoading={setLoading}
- 
-             
-   
- 
+                loading={loading}
               />
             </div>
           </>
