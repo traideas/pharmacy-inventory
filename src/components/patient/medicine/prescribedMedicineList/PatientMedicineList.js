@@ -128,8 +128,8 @@ const PatientMedicineList = () => {
     midday: uptData.midday,
     evening: uptData.evening,
     dinner: uptData.dinner,
-    startdate: uptData.startDate,
-    enddate: uptData.endDate,
+    startdate: uptData.startdate,
+    enddate: uptData.enddate,
     desc: uptData.desc,
       patientId: user._id,
     };

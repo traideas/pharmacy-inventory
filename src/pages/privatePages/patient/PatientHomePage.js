@@ -1,6 +1,6 @@
 import React from 'react';
 import PatientProfile from '../../../components/patient/profile/PatientProfile';
-import MedicineSchedule from '../../../components/patient/medicineSchedule/MedicineSchedule';
+import MedicineSchedule from '../../../components/patient/medicineSchedule/MedicineScheduleList';
 
 const PatientHomePage = () => {
   
