@@ -296,10 +296,7 @@ const SignUpForm = ({ toggleSignIn }) => {
           </div>
         </div>
   
-        {isLoading ? (
-          <p>loading...</p>
-        ) : (
-          <div className="mx-auto">
+        <div className="mx-auto">
             <button
               onClick={handleSubmit}
               className="inline-block w-full rounded-lg bg-black py-2 text-sm font-mono text-white"
@@ -307,7 +304,6 @@ const SignUpForm = ({ toggleSignIn }) => {
               Sign up
             </button>
           </div>
-        )}
       </form>
       <div className="mt-3">
         <p>
