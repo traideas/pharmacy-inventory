@@ -111,15 +111,34 @@ const MedicineSchedule = ({ setDataList, setLoading, loading, data }) => {
     fetchSingleMedicineByPrescriptionId();
   }, []);
 
+  var options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+
+  let date = new Date(data.medicinetakenDate);
+
   if (isLoading) return <p>Loading...</p>;
   return (
     <div className="block w-full p-6 bg-white border border-gray-200 rounded-lg shadow">
-      <div className="flex justify-start gap-x-5 items-center">
+      <div className="flex justify-start gap-x-5">
         {!showEdit ? (
           <>
-            <h5 className=" text-2xl font-bold tracking-tight text-gray-900 ">
-              {data.patientmedicineName}
-            </h5>
+            <div>
+              <h5 className=" text-2xl font-bold tracking-tight text-gray-900 ">
+                {data.patientmedicineName}
+              </h5>
+              <p className="text-sm m-1">
+                Intake date:{' '}
+                <span className="text-gray-500 ml-1">
+                  {' '}
+                  {date.toLocaleDateString('en-US', options)}
+                </span>
+              </p>
+            </div>
+
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
