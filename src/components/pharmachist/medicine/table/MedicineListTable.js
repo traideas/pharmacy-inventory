@@ -348,17 +348,16 @@ const MedicineListTable = () => {
       setLoading(true);
       await getRequest(`/api/pharmacy/medicine-list/${id}`)
         .then((res) => {
-          //console.log(res.data.data);
           setDataList(res.data.data);
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err, 'from api call');
           setLoading(false);
+          return toasterMessage(err, 'error')
         });
     } catch (error) {
       setLoading(false);
-      console.log(error, 'from try catch');
+      return toasterMessage(error, 'error')
     }
   };
 
@@ -368,13 +367,15 @@ const MedicineListTable = () => {
 
   //get single pharmacy
   const fetchSinglePharmacy = async () => {
+    setLoading(true)
     await getRequest(`/api/pharmacy/${id}`)
       .then((res) => {
-        //console.log(res.data.data);
         setSinglePharmacy(res.data.data);
+        setLoading(false)
       })
       .catch((err) => {
-        console.log(err);
+        setLoading(false)
+        return toasterMessage(err, 'error')
       });
   };
 
@@ -413,9 +414,9 @@ const MedicineListTable = () => {
     try {
       await postRequest(`/api/medicine/create`, medicineFinalData)
         .then((medRes) => {
-          console.log(medRes.data.data);
+  
           if (medRes.data.error === true) {
-            //console.log(medRes.data.message);
+        
             return toasterMessage(`${medRes.data.message}`, 'error');
           } else {
             let stockFinalData = {
@@ -452,15 +453,15 @@ const MedicineListTable = () => {
                 }
               })
               .catch((err) => {
-                console.log(err);
+                return toasterMessage(err, 'error')
               });
           }
         })
         .catch((err) => {
-          console.log(err, 'from api call');
+          return toasterMessage(err, 'error')
         });
     } catch (error) {
-      console.log(error, 'from try catch');
+      return toasterMessage(error, 'error')
     }
   };
 
@@ -487,9 +488,7 @@ const MedicineListTable = () => {
         medicineFinalData
       )
         .then((medRes) => {
-          //console.log(medRes.data.data);
           if (medRes.data.error === true) {
-            //console.log(medRes.data.message);
             setLoading(false)
             return toasterMessage(`${medRes.data.message}`, 'error');
           } else {
@@ -542,7 +541,6 @@ const MedicineListTable = () => {
 
   if (loading) return <p>loading...</p>;
 
-  //console.log('datalist', dataList)
 
   return (
     <div className="container-2xl">

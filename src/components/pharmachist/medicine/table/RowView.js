@@ -46,9 +46,7 @@ const RowView = ({
         try {
           await deleteRequest(`/api/medicine/delete/${item.medicineId}`,)
             .then((medRes) => {
-              console.log(medRes.data.data);
               if (medRes.data.error === true) {
-                //console.log(medRes.data.message);
                 return toasterMessage(`${medRes.data.message}`, 'error')
               } else {
                 deleteRequest(`/api/stock/delete/${item._id}`)
@@ -62,15 +60,15 @@ const RowView = ({
                    
                   })
                   .catch((err) => {
-                    console.log(err);
+                    return toasterMessage(err, 'error')
                   });
               }
             })
             .catch((err) => {
-              console.log(err, 'from api call');
+              return toasterMessage(err, 'error')
             });
         } catch (error) {
-          console.log(error, 'from try catch');
+          return toasterMessage(error, 'error')
         }
       };
 
@@ -79,7 +77,6 @@ const RowView = ({
   };
 
 
-  //console.log('item in rowview', item)
   return (
     <>
       <tr className="hover:bg-gray-100 text-center ">

@@ -17,7 +17,6 @@ const RowView = ({ user, item, index,  setDataList,
   const [isUptOpen, setIsUptOpen] = useState(false);
 
   const handleUptOpen = () => {
-    console.log(item, 'item in uptn open modal')
     setUptData(item);
     setIsUptOpen(!isUptOpen);
   };
@@ -40,10 +39,10 @@ const RowView = ({ user, item, index,  setDataList,
            
           })
           .catch((err) => {
-            console.log(err);
+            return toasterMessage(err, 'error')
           });
         } catch (error) {
-          console.log(error, 'from try catch');
+          return toasterMessage(error, 'error')
         }
       };
 

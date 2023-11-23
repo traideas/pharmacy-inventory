@@ -49,13 +49,12 @@ const PharmachistHomePage = () => {
       setLoading(true)
       await getRequest(`/api/pharmacy`)
         .then((res) => {
-          //console.log(res.data.data);
           setDataList(res.data.data.result);
           setLoading(false)
         })
         .catch((err) => {
           setLoading(false)
-          console.log(err);
+          return toasterMessage(err), 'error'
         });
     } catch (error) {
       setLoading(false)
@@ -82,7 +81,6 @@ const PharmachistHomePage = () => {
     setLoading(true);
     await postRequest(`/api/pharmacy/create`, finalData)
       .then((res) => {
-        console.log(res.data.data);
         if (res.data.error === true) {
           setLoading(false);
           setIsError(true);
@@ -98,7 +96,7 @@ const PharmachistHomePage = () => {
       .catch((err) => {
         setLoading(false);
         setIsError(false);
-        console.log(err);
+       return toasterMessage(err, 'error')
       });
   };
 
@@ -112,8 +110,7 @@ const PharmachistHomePage = () => {
             toasterMessage('Branch deleted success');
           });
         } catch (err) {
-          console.error(err);
-          toasterMessage('Somthing went wrong', 'error');
+          return toasterMessage('Somthing went wrong', 'error');
         }
       };
 
