@@ -10,7 +10,7 @@ const UptMedicineModal = ({
   return (
     <Modal>
     <div className="flex justify-between items-start p-4 rounded-t border-b">
-      <h3 className="text-xl font-semibold text-gray-900 ">Add Medicine</h3>
+      <h3 className="text-xl font-semibold text-gray-900 ">Update Medicine</h3>
       <button
         onClick={handleUptClose}
         className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center  "
