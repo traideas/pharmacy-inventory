@@ -26,7 +26,6 @@ const RowView = ({
   };
 
   const handleUptClose = () => setIsUptOpen(false);
-  console.log(item.issueDate)
 
   const currentDate = Date.parse(item.issueDate);
   const expireDate = Date.parse(item.expireDate);
