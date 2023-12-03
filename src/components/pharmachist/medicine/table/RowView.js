@@ -26,17 +26,25 @@ const RowView = ({
   };
 
   const handleUptClose = () => setIsUptOpen(false);
+  console.log(item.issueDate)
 
-  const currentDate = new Date(item.issueDate);
-  const expireDate = new Date(item.expireDate);
-  const daysUntilExpiration = Math.floor((expireDate - currentDate) / (1000 * 60 * 60 * 24));
+  const currentDate = Date.parse(item.issueDate);
+  const expireDate = Date.parse(item.expireDate);
 
   let expirationMessage = '';
-  if (daysUntilExpiration <= 0) {
-    expirationMessage = 'Expired';
-  } else if (daysUntilExpiration <= 7) {
-    expirationMessage = `(Expire will in ${daysUntilExpiration} days)`;
+  
+  if (isNaN(currentDate) || isNaN(expireDate)) {
+    return toasterMessage(`Invalid Date Formate`, 'error')
+  } else {
+    const daysUntilExpiration = Math.floor((expireDate - currentDate) / (1000 * 60 * 60 * 24));
+
+    if (daysUntilExpiration <= 0) {
+      expirationMessage = `(Expired)`
+    } else if (daysUntilExpiration <= 7) {
+      expirationMessage = `(Expire will in ${daysUntilExpiration} days)`;
+    }
   }
+  
 
     // setDataList((prev) => prev?.filter((item) => item?._id !== id));
   const handleDelete = async (item) => {
