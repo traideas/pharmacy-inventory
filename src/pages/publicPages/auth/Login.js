@@ -1,14 +1,15 @@
 import React from 'react';
 import Auth from '../../../components/auth/Auth';
 import logo from '../../../assests/logo/logo.png'
+import IMG from '../../../assests/banner/signup-banner.png'
 
 const Login = () => {
   return (
     <section className="flex flex-wrap lg:h-screen lg:items-center w-full">
-      <div className="bg-[#E0F4FF] h-64 sm:h-96 w-full lg:h-full lg:w-1/3 flex flex-col justify-center items-center">
+      <div className="bg-[#E0F4FF] h-96 w-full lg:h-full lg:w-1/3 flex flex-col justify-center items-center">
         <div>
-          <img src={logo} alt="" className="w-2/3 m-auto" />
-          <p className="text-gray-800 -mt-16 text-xl md:text-3xl lg:text-3xl font-bold mb-2 text-center">
+          <img src={IMG} alt="" className="w-2/3 m-auto" />
+          <p className="text-gray-800  text-xl md:text-3xl lg:text-3xl font-bold mb-2 text-center">
           Pharmacy Inventory Management
           </p>
         </div>

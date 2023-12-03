@@ -1,16 +1,19 @@
 import React from 'react'
 import PublicNavbar from '../../shared/navbar/PublicNavbar'
 import logo from '../../assests/logo/logo.png'
+import homeBanner from '../../assests/banner/home-banner.jpeg'
 
 const PublicHome = () => {
   return (
     <div>
-        <PublicNavbar />
-        <div className='flex justify-center'>
-          <img src={logo} className='bg-cover bg-center' alt='logo'/>
-        </div>
-        <h1 className='text-3xl font-semibold text-center -mt-28'>Pharmacy Inventory Management</h1>
+    <PublicNavbar />
+    <div className='flex justify-center'>
+      <img src={logo} className='bg-cover bg-center' alt='logo'/>
     </div>
+    <h1 className='text-3xl font-semibold text-center -mt-28'>Pharmacy Inventory Management</h1>
+</div>
+
+  
   )
 }
 
