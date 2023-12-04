@@ -9,6 +9,7 @@ import useRequest from '../../../../apiServices/useRequest';
 
 import { useLocation, Link, useParams } from 'react-router-dom';
 import toasterMessage from '../../../../shared/toaster/Toaster';
+import PhLogo from '../../../../assests/logo/pharmachist-logo.png'
 
 const DataList = [
   {
@@ -564,18 +565,24 @@ const MedicineListTable = () => {
       ) : (
         <>
           <BackButton />
-          <div className="flex justify-between items-center">
-            <h1>
+          <div className='flex justify-center'>
+            <img src={PhLogo} alt='' className='h-92'/>
+          </div>
+          <div className='text-center'>
+          <h1>
               Pharmacy Name:{' '}
-              <span className="text-xl fond-bold">
+              <span className="text-xl font-bold ml-1">
                 { singlePharmacy && singlePharmacy.pharmacyname}
               </span>
             </h1>
+          </div>
+          <div className="flex justify-end items-center">
+           
             <button
               data-modal-target="crud-modal"
               data-modal-toggle="crud-modal"
               onClick={handleOpen}
-              className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              className="text-gray-900 mt-10 md:mt-0 lg:mt-0 hover:text-white border border-gray-800 hover:bg-gray-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             >
               Add Medicine
             </button>
