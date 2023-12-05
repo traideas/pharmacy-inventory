@@ -8,6 +8,7 @@ const AddMedicineModal = ({
   handleChangeMedicine,
   handleChangeStock,
   handleSubmit,
+  loading
 }) => {
   return (
     <Modal>
@@ -173,6 +174,7 @@ const AddMedicineModal = ({
             <div>
               <button
                 type="submit"
+                disabled={loading ? true : false}
                 className="text-white inline-flex items-center bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center "
               >
                 Submit

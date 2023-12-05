@@ -413,11 +413,12 @@ const MedicineListTable = () => {
       pharmacyId: id,
     };
     try {
+      setLoading(true)
       await postRequest(`/api/medicine/create`, medicineFinalData)
         .then((medRes) => {
   
           if (medRes.data.error === true) {
-        
+        setLoading(false)
             return toasterMessage(`${medRes.data.message}`, 'error');
           } else {
             let stockFinalData = {
@@ -425,9 +426,11 @@ const MedicineListTable = () => {
               medicineId: medRes.data.data._id,
               pharmacyId: id,
             };
+            setLoading(true)
             postRequest(`/api/stock/create`, stockFinalData)
               .then((res) => {
                 if (res.data.error === true) {
+                  setLoading(false)
                   return toasterMessage(`${res.data.message}`, 'error');
                 } else {
                   let finalData = {
@@ -450,18 +453,23 @@ const MedicineListTable = () => {
                     unitPrice: '',
                     quantity: '',
                   });
+                  
                   handleClose();
+                  setLoading(false)
                 }
               })
               .catch((err) => {
+                setLoading(false)
                 return toasterMessage(err, 'error')
               });
           }
         })
         .catch((err) => {
+          setLoading(false)
           return toasterMessage(err, 'error')
         });
     } catch (error) {
+      setLoading(false)
       return toasterMessage(error, 'error')
     }
   };
@@ -698,6 +706,7 @@ const MedicineListTable = () => {
           handleChangeMedicine={handleChangeMedicine}
           handleChangeStock={handleChangeStock}
           handleSubmit={handleSubmit}
+          loading={loading}
         />
       )}
     </div>
